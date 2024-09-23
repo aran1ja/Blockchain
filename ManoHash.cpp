@@ -21,12 +21,11 @@ cout << "Jusu pasirinkimas: "; cin >> pasirinkimas;
 switch (pasirinkimas) {
     case 1:
     {
-        string simboliu_seka;
-        int ascii_suma = 0;
+        string simboliu_seka; // Naudojama tam, kad butu ivesta simboliu seka, kuria reikia isversti
+        int ascii_suma = 0; // Naudojama ascii reiksmiu sumai
     
-
         cout << "Iveskite simboliu seka, kuria noretumete uzkoduoti: "; cin >> simboliu_seka;
-        int ilgis = 8 * simboliu_seka.size();
+        int ilgis = 8 * simboliu_seka.size(); // Simboliu sekos ilgis bitais
         cout << "Jusu zodis susideda is " << ilgis << " bitu." << endl;
 
         // Zodis isverciamas i ASCII
@@ -45,6 +44,15 @@ switch (pasirinkimas) {
         unsigned long atgal_i_ascii_1 = binarinis_kodas.to_ulong();
         // Zodis antra akrta isverciamas i ASCII
         cout << "Binarinis kodas pavaizduotas kaip ascii: " << atgal_i_ascii_1 << endl;
+
+        //Bandymas sukurti hash koda
+        int ascii_sukeista = ascii_suma * ilgis + (ilgis / 2);
+        cout << "Sukeito ASCII pavaizdavimas: " << ascii_sukeista << endl;
+        bitset<64> binarinis_kodukas((int)ascii_sukeista);
+        cout << "Sukeito ASCII binarinis kodas: " << binarinis_kodukas << endl;
+
+        // Gaunamas kitoks binarinis kodas. 
+        // PROBLEMA PATAISYMUI: jeigu ivesti zodzius su tokiom paciomis ascii reiksmemis, tai gausis tas pats rezultatas
             
         return 0;
     }
