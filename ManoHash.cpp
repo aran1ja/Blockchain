@@ -21,6 +21,8 @@ switch (pasirinkimas) {
     case 1:
     {
         string simboliu_seka;
+        int ascii_suma = 0;
+
         cout << "Iveskite simboliu seka, kuria noretumete uzkoduoti: "; cin >> simboliu_seka;
         int ilgis = 8 * simboliu_seka.size();
         cout << "Jusu zodis susideda is " << ilgis << " bitu." << endl;
@@ -28,10 +30,16 @@ switch (pasirinkimas) {
         // Zodis isverciamas i ASCII
         for (char simbolis : simboliu_seka) {
             cout << "Simbolis " << simbolis << " uzkoduotas kaip " << (int)simbolis << " pagal ASCII" << endl;
+            ascii_suma += (int)simbolis;
+            
         }
 
+        cout << "ASCII suma yra: " << ascii_suma;
 
+        return 0;
     }
+
+
     case 2:
     {
         
