@@ -23,6 +23,7 @@ switch (pasirinkimas) {
     {
         string simboliu_seka; // Naudojama tam, kad butu ivesta simboliu seka, kuria reikia isversti
         int ascii_suma = 0; // Naudojama ascii reiksmiu sumai
+        int daugiklis = 1; // Bandysiu didinti daugiklio skaiciu ir dauginti ascii_suma per ji
     
         cout << "Iveskite simboliu seka, kuria noretumete uzkoduoti: "; cin >> simboliu_seka;
         int ilgis = 8 * simboliu_seka.size(); // Simboliu sekos ilgis bitais
@@ -31,28 +32,31 @@ switch (pasirinkimas) {
         // Zodis isverciamas i ASCII
         for (char simbolis : simboliu_seka) {
             cout << "Simbolis " << simbolis << " uzkoduotas kaip " << (int)simbolis << " pagal ASCII" << endl;
-            ascii_suma += (int)simbolis;
-            
+            ascii_suma += (int)simbolis * daugiklis;
+            daugiklis++;
         }
 
-        cout << "ASCII suma yra: " << ascii_suma << endl;
+        cout << "Padauginta ASCII suma yra: " << ascii_suma << endl;
 
         // Ascii_suma isverciama i binary
         bitset<64> binarinis_kodas((int)ascii_suma);
-        cout << "ASCII suma pavaizduota kaip binarinis kodas: " << binarinis_kodas << endl;
+        cout << "Padauginta ASCII suma pavaizduota kaip binarinis kodas: " << binarinis_kodas << endl;
 
         unsigned long atgal_i_ascii_1 = binarinis_kodas.to_ulong();
         // Zodis antra akrta isverciamas i ASCII
         cout << "Binarinis kodas pavaizduotas kaip ascii: " << atgal_i_ascii_1 << endl;
 
+        cout << "-----------------------------------------" << endl;
+
         //Bandymas sukurti hash koda
         int ascii_sukeista = ascii_suma * ilgis + (ilgis / 2);
-        cout << "Sukeito ASCII pavaizdavimas: " << ascii_sukeista << endl;
+        cout << "Sukeisto ASCII pavaizdavimas: " << ascii_sukeista << endl;
         bitset<64> binarinis_kodukas((int)ascii_sukeista);
-        cout << "Sukeito ASCII binarinis kodas: " << binarinis_kodukas << endl;
+        cout << "Sukeisto ASCII binarinis kodas: " << binarinis_kodukas << endl;
 
         // Gaunamas kitoks binarinis kodas. 
-        // PROBLEMA PATAISYMUI: jeigu ivesti zodzius su tokiom paciomis ascii reiksmemis, tai gausis tas pats rezultatas
+        // PROBLEMA PATAISYMUI: jeigu ivesti zodzius su tokiom paciomis ascii reiksmemis, tai gausis tas pats rezultatas - pataisyta
+        // Hex'ui reikia 256 bitu binary code'o
             
         return 0;
     }
