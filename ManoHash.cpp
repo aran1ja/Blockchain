@@ -6,9 +6,12 @@ using namespace std;
 
 void bitaiKeiciasiVietomis(bitset<64> bitai) {
     int binarinis_ilgis = bitai.size(); 
-    for (int i = 0; i < binarinis_ilgis; i++) 
+    for (int i = 0; i < binarinis_ilgis / 2; i++) 
+    // Dalinu is 2, nes jei turime 10 bitu, tai sukeiciama pagal toki principa: 1-10, 2-9, 3-8, 4-7, 5-6
     {
-        bitai[binarinis_ilgis - i - 1] = bitai[i]; 
+        int laikinas = bitai[i];
+        bitai[i] = bitai[binarinis_ilgis - i - 1]; 
+        bitai[binarinis_ilgis - i - 1] = laikinas;
     }
     
     cout << "Bitukas: " << bitai << endl;
