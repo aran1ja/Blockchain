@@ -16,6 +16,24 @@ void bitaiKeiciasiVietomis(bitset<64> bitai) {
     
     cout << "Bitukas: " << bitai << endl;
 
+// Neveikiantis sukeitimas, taciau veikia su / 4. Pakeicia pirmus 16 bitu su 3, antrus su 4
+    int keiciamiBitaiPo4 = binarinis_ilgis / 16;
+    for (int i = 0; i < keiciamiBitaiPo4; i++)
+    {
+        bool laikinai = bitai[i];
+        bitai[i] = bitai[keiciamiBitaiPo4 * 2 + i]; 
+        bitai[keiciamiBitaiPo4 * 2 + i] = laikinai;
+    }
+  /*  
+    for (int i = keiciamiBitaiPo4; i < keiciamiBitaiPo4 * 2; i++)
+    {
+        int laikinai = bitai[i];
+        bitai[i] = bitai[keiciamiBitaiPo4 * 2 + i]; 
+        bitai[keiciamiBitaiPo4 * 2 + i] = laikinai;
+    }
+*/
+    cout << "Bit bit: " << bitai << endl;
+
 }
 
 int main() {
