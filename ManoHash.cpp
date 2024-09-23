@@ -8,10 +8,9 @@ cout << "Paspaudus skaiciu issirinkite ka norite padaryti." << endl;
 cout << "1. Ivesti zodi arba simboli rankiniu budu." << endl;
 cout << "2. Atidaryti failus, sudarytus tik is vieno simbolio." << endl;
 cout << "3. Atidaryti programos sugeneruotus failus, kuriuose yra > 1000 simboliu." << endl;
-cout << "4. Atidaryti faila tekstas_1000.txt, kuriame yra > 1000 simboliu." << endl;
-cout << "5. Atidaryti faila tekstas_1000_kitas.txt, kuris skiriasi nuo tekstas_1000.txt tik vienu simboliu." << endl;
-cout << "6. Atidaryti tuscia faila 'tuscias.txt'." << endl;
-cout << "7. Baigti darba." << endl;
+cout << "4. Atidaryti du failus su 1000 simboliais, kurie tarpusavy skiriasi tik 1 simboliu." << endl;
+cout << "5. Atidaryti tuscia faila 'tuscias.txt'." << endl;
+cout << "6. Baigti darba." << endl;
 cout << "Jusu pasirinkimas: "; cin >> pasirinkimas;
 
 switch (pasirinkimas) {
@@ -25,7 +24,6 @@ switch (pasirinkimas) {
 
     case 2:
     {
-        // logic errors
         cout << "Nuskaitomi 3 failai su vienu simboliu kiekviename. " << endl;
         string simbolis1 = nuskaitymasIsFailo("simbolis_1.txt");
         hashFunkcija(simbolis1);
@@ -41,20 +39,26 @@ switch (pasirinkimas) {
     {
         nuskaitymasIsFailo("simbolis_1.txt");
         nuskaitymasIsFailo("simbolis_1.txt");
+        break;
     }
     case 4:
     {
-        nuskaitymasIsFailo("tekstas_1000.txt");
+        cout << "Nuskaitomi du failuai su 1000 simboliais, kurie tarpusavy skiriasi tik 1 simboliu." << endl;
+        string tekstas1 = nuskaitymasIsFailo("tekstas_1000.txt");
+        hashFunkcija(tekstas1);
+        cout << "-----------------------------------------------------------------" << endl;
+        string tekstas2 = nuskaitymasIsFailo("tekstas_1000_kitas.txt");
+        hashFunkcija(tekstas2);
+        break;
     }
     case 5:
     {
-        nuskaitymasIsFailo("tekstas_1000_kitas.txt");
+        cout << "Nuskaitomas tuscias failas." << endl;
+        string tuscias = nuskaitymasIsFailo("tuscias.txt");
+        hashFunkcija(tuscias);
+        break;
     }
     case 6:
-    {
-        nuskaitymasIsFailo("tuscias.txt");
-    }
-    case 7:
     {
         cout << "Darbas baigtas." << endl;
         break;
@@ -65,5 +69,4 @@ switch (pasirinkimas) {
         break;
     }
 }
-
 }

@@ -60,7 +60,7 @@ void bitaiKeiciasiVietomis(bitset<256>& bitai) {
     }
     
     cout << "Iui Iui: " << bitai << endl;
-    cout << "-----------------------------------------------------" << endl;
+    cout << "-----------------------------------------------------------------" << endl;
 }
 
 string hexPadarymas(bitset<256>& bitai) {
@@ -88,12 +88,10 @@ string nuskaitymasIsFailo(string failoPavadinimas) {
 
     string turinys;
     while (getline(failas, turinys))
-    {
-        cout << turinys << endl;
-    }
     
     failas.close();
-    return 0;
+
+    return turinys;;
 }
 
 void hashFunkcija(string simboliu_seka) {
@@ -101,11 +99,12 @@ void hashFunkcija(string simboliu_seka) {
         int daugiklis = 1; // Bandysiu didinti daugiklio skaiciu ir dauginti ascii_suma per ji
     
         int ilgis = 8 * simboliu_seka.size(); // Simboliu sekos ilgis bitais
+        cout << "Simboliu seka yra: " << simboliu_seka << endl;
         cout << "Jusu zodis susideda is " << ilgis << " bitu." << endl;
 
         // Zodis isverciamas i ASCII
         for (char simbolis : simboliu_seka) {
-            cout << "Simbolis " << simbolis << " uzkoduotas kaip " << (int)simbolis << " pagal ASCII" << endl;
+            //cout << "Simbolis " << simbolis << " uzkoduotas kaip " << (int)simbolis << " pagal ASCII" << endl;
             ascii_suma += (int)simbolis * daugiklis;
             daugiklis++;
         }
