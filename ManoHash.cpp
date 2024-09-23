@@ -1,9 +1,19 @@
 #include <iostream>
 #include <iomanip>
 #include <bitset>
+#include <sstream>
 
 using namespace std;
 
+void pakeitimasPo4bitus(bitset<256>& bitai, int reiksme_1, int reiksme_2) {
+    for (int i = 0; i < 4; i++) {
+        bool laikinas = bitai[reiksme_1 + i];
+        bitai[reiksme_1 + i] = bitai[reiksme_2 + i]; 
+        bitai[reiksme_2 + i] = laikinas;  
+    }
+}
+
+// Pakeisti, nes veikia ne taip kaip reikia
 void bitaiKeiciasiVietomis(bitset<256>& bitai) {
     int binarinis_ilgis = bitai.size(); 
     for (int i = 0; i < binarinis_ilgis / 2; i++) 
@@ -27,34 +37,22 @@ void bitaiKeiciasiVietomis(bitset<256>& bitai) {
     
     cout << "Bam bam: " << bitai << endl;
 
-    // Pataisyti
-    // Keiciasi 1-4 bitai su 60-64
-    for (int i = 0; i < 4; i++) {
-        bool laikinas = bitai[i];
-        bitai[i] = bitai[60 + i]; 
-        bitai[60 + i] = laikinas;  
-    }
-
-    // Keiciasi 8-12 bitai su 52-56
-    for (int i = 0; i < 4; i++) {
-        bool laikinas = bitai[8 + i];
-        bitai[8 + i] = bitai[52 + i]; 
-        bitai[52 + i] = laikinas;  
-    }
-
-    // Keiciasi 16-20 bitai su 44-48
-    for (int i = 0; i < 4; i++) {
-        bool laikinas = bitai[16 + i];
-        bitai[16 + i] = bitai[44 + i]; 
-        bitai[44 + i] = laikinas;  
-    }
-
-    // Keiciasi 24-28 bitai su 36-40
-    for (int i = 0; i < 4; i++) {
-        bool laikinas = bitai[24 + i];
-        bitai[24 + i] = bitai[36 + i]; 
-        bitai[36 + i] = laikinas;  
-    }
+    pakeitimasPo4bitus(bitai,  0, 256);
+    pakeitimasPo4bitus(bitai,  8, 248);
+    pakeitimasPo4bitus(bitai, 16, 240);
+    pakeitimasPo4bitus(bitai, 24, 232);
+    pakeitimasPo4bitus(bitai, 32, 224);
+    pakeitimasPo4bitus(bitai, 40, 216);
+    pakeitimasPo4bitus(bitai, 48, 208);
+    pakeitimasPo4bitus(bitai, 56, 200);
+    pakeitimasPo4bitus(bitai, 64, 192);
+    pakeitimasPo4bitus(bitai, 72, 184);
+    pakeitimasPo4bitus(bitai, 80, 176);
+    pakeitimasPo4bitus(bitai, 88, 168);
+    pakeitimasPo4bitus(bitai, 96, 160);
+    pakeitimasPo4bitus(bitai, 104, 152);
+    pakeitimasPo4bitus(bitai, 112, 144);
+    pakeitimasPo4bitus(bitai, 120, 136);
 
     cout << "Bit bit: " << bitai << endl;
 
@@ -116,8 +114,7 @@ switch (pasirinkimas) {
         // Atsakymas hex pavidalu
         // terminate called after throwing an instance of 'std::overflow_error'
         // what():  _Base_bitset::_M_do_to_ullong
-        unsigned long long hexKodas = binarinis_kodas.to_ullong(); 
-        cout << "Hash kodo atvaizdavimas hex pavidalu: " << hex << hexKodas << endl;
+        cout << "Hash kodo atvaizdavimas hex pavidalu: " << hex << binarinis_kodas << endl;
             
         return 0;
     }
