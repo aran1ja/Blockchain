@@ -4,6 +4,17 @@
 
 using namespace std;
 
+void bitaiKeiciasiVietomis(bitset<64> bitai) {
+    int binarinis_ilgis = bitai.size(); 
+    for (int i = 0; i < binarinis_ilgis; i++) 
+    {
+        bitai[binarinis_ilgis - i - 1] = bitai[i]; 
+    }
+    
+    cout << "Bitukas: " << bitai << endl;
+
+}
+
 int main() {
 
 int pasirinkimas;
@@ -41,7 +52,9 @@ switch (pasirinkimas) {
         // Ascii_suma isverciama i binary
         bitset<64> binarinis_kodas((int)ascii_suma);
         cout << "Padauginta ASCII suma pavaizduota kaip binarinis kodas: " << binarinis_kodas << endl;
+        bitaiKeiciasiVietomis(binarinis_kodas);
 
+/*
         unsigned long atgal_i_ascii_1 = binarinis_kodas.to_ulong();
         // Zodis antra akrta isverciamas i ASCII
         cout << "Binarinis kodas pavaizduotas kaip ascii: " << atgal_i_ascii_1 << endl;
@@ -53,7 +66,7 @@ switch (pasirinkimas) {
         cout << "Sukeisto ASCII pavaizdavimas: " << ascii_sukeista << endl;
         bitset<64> binarinis_kodukas((int)ascii_sukeista);
         cout << "Sukeisto ASCII binarinis kodas: " << binarinis_kodukas << endl;
-
+*/
         // Gaunamas kitoks binarinis kodas. 
         // PROBLEMA PATAISYMUI: jeigu ivesti zodzius su tokiom paciomis ascii reiksmemis, tai gausis tas pats rezultatas - pataisyta
         // Hex'ui reikia 256 bitu binary code'o
@@ -95,3 +108,4 @@ switch (pasirinkimas) {
 }
 
 }
+
