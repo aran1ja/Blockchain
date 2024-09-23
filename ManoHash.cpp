@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void bitaiKeiciasiVietomis(bitset<64>& bitai) {
+void bitaiKeiciasiVietomis(bitset<256>& bitai) {
     int binarinis_ilgis = bitai.size(); 
     for (int i = 0; i < binarinis_ilgis / 2; i++) 
     // Dalinu is 2, nes jei turime 10 bitu, tai sukeiciama pagal toki principa: 1-10, 2-9, 3-8, 4-7, 5-6
@@ -27,7 +27,7 @@ void bitaiKeiciasiVietomis(bitset<64>& bitai) {
     
     cout << "Bam bam: " << bitai << endl;
 
-    // Pataisyta
+    // Pataisyti
     // Keiciasi 1-4 bitai su 60-64
     for (int i = 0; i < 4; i++) {
         bool laikinas = bitai[i];
@@ -106,7 +106,7 @@ switch (pasirinkimas) {
         cout << "Padauginta ASCII suma yra: " << ascii_suma << endl;
 
         // Ascii_suma isverciama i binary
-        bitset<64> binarinis_kodas((int)ascii_suma);
+        bitset<256> binarinis_kodas((int)ascii_suma);
         cout << "Padauginta ASCII suma pavaizduota kaip binarinis kodas: " << binarinis_kodas << endl;
         for (int i = 0; i < 7; i++)
         {
@@ -114,6 +114,8 @@ switch (pasirinkimas) {
         }
 
         // Atsakymas hex pavidalu
+        // terminate called after throwing an instance of 'std::overflow_error'
+        // what():  _Base_bitset::_M_do_to_ullong
         unsigned long long hexKodas = binarinis_kodas.to_ullong(); 
         cout << "Hash kodo atvaizdavimas hex pavidalu: " << hex << hexKodas << endl;
             
