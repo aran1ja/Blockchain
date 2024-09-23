@@ -19,10 +19,10 @@ void bitaiKeiciasiVietomis(bitset<64>& bitai) {
     // Bandymas sugeneruoti daugiau 1 ir 0
     for (int i = 0; i < binarinis_ilgis / 2; i++) {
         if (bitai[i] == bitai[binarinis_ilgis / 2 + i]) { // Patikriname ar pirmoji puse kodo lygi su kitaja
-            bitai[i] = 0; // Jeigu taip - rasome 0
+            bitai[i] = 1; // Jeigu taip - rasome 1
         } else {
-            bitai[i] = 1; // Jeigu ne - rasome 1
-        }
+            bitai[i] = 0; // Jeigu ne - rasome 0
+        } // Gaudavosi per daug 1
     }
     
     cout << "Bam bam: " << bitai << endl;
@@ -68,6 +68,7 @@ void bitaiKeiciasiVietomis(bitset<64>& bitai) {
     }
     
     cout << "Iui Iui: " << bitai << endl;
+    cout << "-----------------------------------------------------" << endl;
 }
 
 int main() {
@@ -107,7 +108,14 @@ switch (pasirinkimas) {
         // Ascii_suma isverciama i binary
         bitset<64> binarinis_kodas((int)ascii_suma);
         cout << "Padauginta ASCII suma pavaizduota kaip binarinis kodas: " << binarinis_kodas << endl;
-        bitaiKeiciasiVietomis(binarinis_kodas);
+        for (int i = 0; i < 7; i++)
+        {
+            bitaiKeiciasiVietomis(binarinis_kodas);
+        }
+
+        // Atsakymas hex pavidalu
+        unsigned long long hexKodas = binarinis_kodas.to_ullong(); 
+        cout << "Hash kodo atvaizdavimas hex pavidalu: " << hex << hexKodas << endl;
             
         return 0;
     }
