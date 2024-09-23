@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <bitset>
 
 using namespace std;
 
@@ -22,6 +23,7 @@ switch (pasirinkimas) {
     {
         string simboliu_seka;
         int ascii_suma = 0;
+    
 
         cout << "Iveskite simboliu seka, kuria noretumete uzkoduoti: "; cin >> simboliu_seka;
         int ilgis = 8 * simboliu_seka.size();
@@ -34,8 +36,16 @@ switch (pasirinkimas) {
             
         }
 
-        cout << "ASCII suma yra: " << ascii_suma;
+        cout << "ASCII suma yra: " << ascii_suma << endl;
 
+        // Ascii_suma isverciama i binary
+        bitset<64> binarinis_kodas((int)ascii_suma);
+        cout << "ASCII suma pavaizduota kaip binarinis kodas: " << binarinis_kodas << endl;
+
+        unsigned long atgal_i_ascii_1 = binarinis_kodas.to_ulong();
+        // Zodis antra akrta isverciamas i ASCII
+        cout << "Binarinis kodas pavaizduotas kaip ascii: " << atgal_i_ascii_1 << endl;
+            
         return 0;
     }
 
@@ -71,4 +81,5 @@ switch (pasirinkimas) {
         break;
     }
 }
+
 }
