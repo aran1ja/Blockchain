@@ -2,11 +2,12 @@
 #include <iomanip>
 #include <bitset>
 #include <sstream>
+#include <string>
 
 using namespace std;
 
-void pakeitimasPo4bitus(bitset<256>& bitai, int reiksme_1, int reiksme_2) {
-    for (int i = 0; i < 4; i++) {
+void pakeitimasPo16bitus(bitset<256>& bitai, int reiksme_1, int reiksme_2) {
+    for (int i = 0; i < 16; i++) {
         bool laikinas = bitai[reiksme_1 + i];
         bitai[reiksme_1 + i] = bitai[reiksme_2 + i]; 
         bitai[reiksme_2 + i] = laikinas;  
@@ -37,22 +38,14 @@ void bitaiKeiciasiVietomis(bitset<256>& bitai) {
     
     cout << "Bam bam: " << bitai << endl;
 
-    pakeitimasPo4bitus(bitai,  0, 256);
-    pakeitimasPo4bitus(bitai,  8, 248);
-    pakeitimasPo4bitus(bitai, 16, 240);
-    pakeitimasPo4bitus(bitai, 24, 232);
-    pakeitimasPo4bitus(bitai, 32, 224);
-    pakeitimasPo4bitus(bitai, 40, 216);
-    pakeitimasPo4bitus(bitai, 48, 208);
-    pakeitimasPo4bitus(bitai, 56, 200);
-    pakeitimasPo4bitus(bitai, 64, 192);
-    pakeitimasPo4bitus(bitai, 72, 184);
-    pakeitimasPo4bitus(bitai, 80, 176);
-    pakeitimasPo4bitus(bitai, 88, 168);
-    pakeitimasPo4bitus(bitai, 96, 160);
-    pakeitimasPo4bitus(bitai, 104, 152);
-    pakeitimasPo4bitus(bitai, 112, 144);
-    pakeitimasPo4bitus(bitai, 120, 136);
+    pakeitimasPo16bitus(bitai,  0, 256);
+    pakeitimasPo16bitus(bitai, 16, 240);
+    pakeitimasPo16bitus(bitai, 32, 224);
+    pakeitimasPo16bitus(bitai, 48, 208);
+    pakeitimasPo16bitus(bitai, 64, 192);
+    pakeitimasPo16bitus(bitai, 80, 176);
+    pakeitimasPo16bitus(bitai, 96, 160);
+    pakeitimasPo16bitus(bitai, 112, 144);
 
     cout << "Bit bit: " << bitai << endl;
 
@@ -67,6 +60,22 @@ void bitaiKeiciasiVietomis(bitset<256>& bitai) {
     
     cout << "Iui Iui: " << bitai << endl;
     cout << "-----------------------------------------------------" << endl;
+}
+
+string hexPadarymas(bitset<256>& bitai) {
+    stringstream ss;
+
+    for (int i = 0; i < 256; i += 4) // Paemame po 4 bitus is 256 tam, kad konvertuoti 4 bitus i 1 hex
+    {
+        int reiksme = 0; 
+        reiksme += bitai[i] * 8; 
+        reiksme += bitai[i + 1] * 4;
+        reiksme += bitai[i + 2] * 2;
+        reiksme += bitai[i + 3] * 1;
+
+        ss << hex << reiksme;
+    }
+    return ss.str();
 }
 
 int main() {
@@ -106,15 +115,13 @@ switch (pasirinkimas) {
         // Ascii_suma isverciama i binary
         bitset<256> binarinis_kodas((int)ascii_suma);
         cout << "Padauginta ASCII suma pavaizduota kaip binarinis kodas: " << binarinis_kodas << endl;
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 5; i++)
         {
             bitaiKeiciasiVietomis(binarinis_kodas);
         }
 
-        // Atsakymas hex pavidalu
-        // terminate called after throwing an instance of 'std::overflow_error'
-        // what():  _Base_bitset::_M_do_to_ullong
-        cout << "Hash kodo atvaizdavimas hex pavidalu: " << hex << binarinis_kodas << endl;
+        string hexKodas = hexPadarymas(binarinis_kodas);
+        cout << "Hash kodo atvaizdavimas hex pavidalu: " << hex << hexKodas << endl;
             
         return 0;
     }
