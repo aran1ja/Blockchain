@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void bitaiKeiciasiVietomis(bitset<64> bitai) {
+void bitaiKeiciasiVietomis(bitset<64>& bitai) {
     int binarinis_ilgis = bitai.size(); 
     for (int i = 0; i < binarinis_ilgis / 2; i++) 
     // Dalinu is 2, nes jei turime 10 bitu, tai sukeiciama pagal toki principa: 1-10, 2-9, 3-8, 4-7, 5-6
@@ -15,6 +15,17 @@ void bitaiKeiciasiVietomis(bitset<64> bitai) {
     }
     
     cout << "Bitukas: " << bitai << endl;
+
+    // Bandymas sugeneruoti daugiau 1 ir 0
+    for (int i = 0; i < binarinis_ilgis / 2; i++) {
+        if (bitai[i] == bitai[binarinis_ilgis / 2 + i]) { // Patikriname ar pirmoji puse kodo lygi su kitaja
+            bitai[i] = 0; // Jeigu taip - rasome 0
+        } else {
+            bitai[i] = 1; // Jeigu ne - rasome 1
+        }
+    }
+    
+    cout << "Bam bam: " << bitai << endl;
 
     // Pataisyta
     // Keiciasi 1-4 bitai su 60-64
@@ -46,6 +57,17 @@ void bitaiKeiciasiVietomis(bitset<64> bitai) {
     }
 
     cout << "Bit bit: " << bitai << endl;
+
+    // Bandymas sugeneruoti daugiau 1 ir 0
+    for (int i = 0; i < binarinis_ilgis / 2; i++) {
+        if (bitai[i] == bitai[binarinis_ilgis - i - 1]) { // Patikriname ar pirmoji puse kodo lygi su kitaja
+            bitai[i] = 1; // Jeigu taip - rasome 1
+        } else {
+            bitai[i] = 0; // Jeigu ne - rasome 0
+        }
+    }
+    
+    cout << "Iui Iui: " << bitai << endl;
 }
 
 int main() {
@@ -86,21 +108,6 @@ switch (pasirinkimas) {
         bitset<64> binarinis_kodas((int)ascii_suma);
         cout << "Padauginta ASCII suma pavaizduota kaip binarinis kodas: " << binarinis_kodas << endl;
         bitaiKeiciasiVietomis(binarinis_kodas);
-
-/*
-        unsigned long atgal_i_ascii_1 = binarinis_kodas.to_ulong();
-        // Zodis antra akrta isverciamas i ASCII
-        cout << "Binarinis kodas pavaizduotas kaip ascii: " << atgal_i_ascii_1 << endl;
-
-        cout << "-----------------------------------------" << endl;
-
-        //Bandymas sukurti hash koda
-        int ascii_sukeista = ascii_suma * ilgis + (ilgis / 2);
-        cout << "Sukeisto ASCII pavaizdavimas: " << ascii_sukeista << endl;
-        bitset<64> binarinis_kodukas((int)ascii_sukeista);
-        cout << "Sukeisto ASCII binarinis kodas: " << binarinis_kodukas << endl;
-*/
-        // Hex'ui reikia 256 bitu binary code'o
             
         return 0;
     }
@@ -139,4 +146,3 @@ switch (pasirinkimas) {
 }
 
 }
-
