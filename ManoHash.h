@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <bitset>
 #include <sstream>
+#include <fstream>
 #include <string>
 
 using namespace std;
@@ -76,4 +77,49 @@ string hexPadarymas(bitset<256>& bitai) {
         ss << hex << reiksme;
     }
     return ss.str();
+}
+
+string nuskaitymasIsFailo(string failoPavadinimas) {
+    ifstream failas(failoPavadinimas);
+    if (!failas.is_open()) { 
+        cout << "Nepavyko atidaryti failo: " << failoPavadinimas << endl;
+        return " "; 
+    }
+
+    string turinys;
+    while (getline(failas, turinys))
+    {
+        cout << turinys << endl;
+    }
+    
+    failas.close();
+    return 0;
+}
+
+void hashFunkcija(string simboliu_seka) {
+        int ascii_suma = 0; // Naudojama ascii reiksmiu sumai
+        int daugiklis = 1; // Bandysiu didinti daugiklio skaiciu ir dauginti ascii_suma per ji
+    
+        int ilgis = 8 * simboliu_seka.size(); // Simboliu sekos ilgis bitais
+        cout << "Jusu zodis susideda is " << ilgis << " bitu." << endl;
+
+        // Zodis isverciamas i ASCII
+        for (char simbolis : simboliu_seka) {
+            cout << "Simbolis " << simbolis << " uzkoduotas kaip " << (int)simbolis << " pagal ASCII" << endl;
+            ascii_suma += (int)simbolis * daugiklis;
+            daugiklis++;
+        }
+
+        cout << "Padauginta ASCII suma yra: " << ascii_suma << endl;
+
+        // Ascii_suma isverciama i binary
+        bitset<256> binarinis_kodas((int)ascii_suma);
+        cout << "Padauginta ASCII suma pavaizduota kaip binarinis kodas: " << binarinis_kodas << endl;
+        for (int i = 0; i < 5; i++)
+        {
+            bitaiKeiciasiVietomis(binarinis_kodas);
+        }
+
+        string hexKodas = hexPadarymas(binarinis_kodas);
+        cout << "Hash kodo atvaizdavimas hex pavidalu: " << hex << hexKodas << endl;
 }

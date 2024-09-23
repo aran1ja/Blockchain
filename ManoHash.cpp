@@ -17,57 +17,42 @@ cout << "Jusu pasirinkimas: "; cin >> pasirinkimas;
 switch (pasirinkimas) {
     case 1:
     {
-        string simboliu_seka; // Naudojama tam, kad butu ivesta simboliu seka, kuria reikia isversti
-        int ascii_suma = 0; // Naudojama ascii reiksmiu sumai
-        int daugiklis = 1; // Bandysiu didinti daugiklio skaiciu ir dauginti ascii_suma per ji
-    
-        cout << "Iveskite simboliu seka, kuria noretumete uzkoduoti: "; cin >> simboliu_seka;
-        int ilgis = 8 * simboliu_seka.size(); // Simboliu sekos ilgis bitais
-        cout << "Jusu zodis susideda is " << ilgis << " bitu." << endl;
-
-        // Zodis isverciamas i ASCII
-        for (char simbolis : simboliu_seka) {
-            cout << "Simbolis " << simbolis << " uzkoduotas kaip " << (int)simbolis << " pagal ASCII" << endl;
-            ascii_suma += (int)simbolis * daugiklis;
-            daugiklis++;
-        }
-
-        cout << "Padauginta ASCII suma yra: " << ascii_suma << endl;
-
-        // Ascii_suma isverciama i binary
-        bitset<256> binarinis_kodas((int)ascii_suma);
-        cout << "Padauginta ASCII suma pavaizduota kaip binarinis kodas: " << binarinis_kodas << endl;
-        for (int i = 0; i < 5; i++)
-        {
-            bitaiKeiciasiVietomis(binarinis_kodas);
-        }
-
-        string hexKodas = hexPadarymas(binarinis_kodas);
-        cout << "Hash kodo atvaizdavimas hex pavidalu: " << hex << hexKodas << endl;
-            
-        return 0;
+        string simboliai;
+        cout << "Iveskite simboliu seka, kuria noretumete uzkoduoti: "; cin >> simboliai;
+        hashFunkcija(simboliai);
+        break;
     }
-
 
     case 2:
     {
-        
+        // logic errors
+        cout << "Nuskaitomi 3 failai su vienu simboliu kiekviename. " << endl;
+        string simbolis1 = nuskaitymasIsFailo("simbolis_1.txt");
+        hashFunkcija(simbolis1);
+        cout << "-----------------------------------------------------------------" << endl;
+        string simbolis2 = nuskaitymasIsFailo("simbolis_2.txt");
+        hashFunkcija(simbolis2);
+        cout << "-----------------------------------------------------------------" << endl;
+        string simbolis3 = nuskaitymasIsFailo("simbolis_3.txt");
+        hashFunkcija(simbolis3);
+        break;
     }
     case 3:
     {
-        
+        nuskaitymasIsFailo("simbolis_1.txt");
+        nuskaitymasIsFailo("simbolis_1.txt");
     }
     case 4:
     {
-        
+        nuskaitymasIsFailo("tekstas_1000.txt");
     }
     case 5:
     {
-        
+        nuskaitymasIsFailo("tekstas_1000_kitas.txt");
     }
     case 6:
     {
-        
+        nuskaitymasIsFailo("tuscias.txt");
     }
     case 7:
     {
