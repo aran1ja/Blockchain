@@ -16,24 +16,36 @@ void bitaiKeiciasiVietomis(bitset<64> bitai) {
     
     cout << "Bitukas: " << bitai << endl;
 
-// Neveikiantis sukeitimas, taciau veikia su / 4. Pakeicia pirmus 16 bitu su 3, antrus su 4
-    int keiciamiBitaiPo4 = binarinis_ilgis / 16;
-    for (int i = 0; i < keiciamiBitaiPo4; i++)
-    {
-        bool laikinai = bitai[i];
-        bitai[i] = bitai[keiciamiBitaiPo4 * 2 + i]; 
-        bitai[keiciamiBitaiPo4 * 2 + i] = laikinai;
+    // Pataisyta
+    // Keiciasi 1-4 bitai su 60-64
+    for (int i = 0; i < 4; i++) {
+        bool laikinas = bitai[i];
+        bitai[i] = bitai[60 + i]; 
+        bitai[60 + i] = laikinas;  
     }
-  /*  
-    for (int i = keiciamiBitaiPo4; i < keiciamiBitaiPo4 * 2; i++)
-    {
-        int laikinai = bitai[i];
-        bitai[i] = bitai[keiciamiBitaiPo4 * 2 + i]; 
-        bitai[keiciamiBitaiPo4 * 2 + i] = laikinai;
-    }
-*/
-    cout << "Bit bit: " << bitai << endl;
 
+    // Keiciasi 8-12 bitai su 52-56
+    for (int i = 0; i < 4; i++) {
+        bool laikinas = bitai[8 + i];
+        bitai[8 + i] = bitai[52 + i]; 
+        bitai[52 + i] = laikinas;  
+    }
+
+    // Keiciasi 16-20 bitai su 44-48
+    for (int i = 0; i < 4; i++) {
+        bool laikinas = bitai[16 + i];
+        bitai[16 + i] = bitai[44 + i]; 
+        bitai[44 + i] = laikinas;  
+    }
+
+    // Keiciasi 24-28 bitai su 36-40
+    for (int i = 0; i < 4; i++) {
+        bool laikinas = bitai[24 + i];
+        bitai[24 + i] = bitai[36 + i]; 
+        bitai[36 + i] = laikinas;  
+    }
+
+    cout << "Bit bit: " << bitai << endl;
 }
 
 int main() {
@@ -88,8 +100,6 @@ switch (pasirinkimas) {
         bitset<64> binarinis_kodukas((int)ascii_sukeista);
         cout << "Sukeisto ASCII binarinis kodas: " << binarinis_kodukas << endl;
 */
-        // Gaunamas kitoks binarinis kodas. 
-        // PROBLEMA PATAISYMUI: jeigu ivesti zodzius su tokiom paciomis ascii reiksmemis, tai gausis tas pats rezultatas - pataisyta
         // Hex'ui reikia 256 bitu binary code'o
             
         return 0;
