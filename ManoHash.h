@@ -16,6 +16,14 @@ void pakeitimasPo16bitus(bitset<256>& bitai, int reiksme_1, int reiksme_2) {
     }
 }
 
+void pakeitimasPo64bitus(bitset<256>& bitai, int reiksme_1, int reiksme_2) {
+    for (int i = 0; i < 64; i++) {
+        bool laikinas = bitai[reiksme_1 + i];
+        bitai[reiksme_1 + i] = bitai[reiksme_2 + i]; 
+        bitai[reiksme_2 + i] = laikinas;  
+    }
+}
+
 // Pakeisti, nes veikia ne taip kaip reikia
 void bitaiKeiciasiVietomis(bitset<256>& bitai) {
     int binarinis_ilgis = bitai.size(); 
@@ -64,6 +72,57 @@ void bitaiKeiciasiVietomis(bitset<256>& bitai) {
     cout << "-----------------------------------------------------------------" << endl;
 }
 
+// Pakeisti, nes veikia ne taip kaip reikia
+void bitaiKeiciasiVietomis2(bitset<256>& bitai) {
+    int binarinis_ilgis = bitai.size(); 
+    for (int i = 0; i < binarinis_ilgis / 2; i++) 
+    // Dalinu is 2, nes jei turime 10 bitu, tai sukeiciama pagal toki principa: 1-10, 2-9, 3-8, 4-7, 5-6
+    {
+        int laikinas = bitai[i];
+        bitai[i] = bitai[binarinis_ilgis - i - 1]; 
+        bitai[binarinis_ilgis - i - 1] = laikinas;
+    }
+    
+    cout << "Bitukas: " << bitai << endl;
+
+    pakeitimasPo64bitus(bitai,  0, 256);
+    pakeitimasPo64bitus(bitai, 64, 192);
+
+    // Bandymas sugeneruoti daugiau 1 ir 0
+    for (int i = 0; i < binarinis_ilgis / 2; i++) {
+        if (bitai[i] == bitai[binarinis_ilgis / 2 + i]) { // Patikriname ar pirmoji puse kodo lygi su kitaja
+            bitai[i] = 1; // Jeigu taip - rasome 1
+        } else {
+            bitai[i] = 0; // Jeigu ne - rasome 0
+        } // Gaudavosi per daug 1
+    }
+    
+    cout << "Bam bam: " << bitai << endl;
+
+    for (int i = 0; i < binarinis_ilgis / 2; i++) 
+    // Dalinu is 2, nes jei turime 10 bitu, tai sukeiciama pagal toki principa: 1-10, 2-9, 3-8, 4-7, 5-6
+    {
+        int laikinas = bitai[i + 1];
+        bitai[i + 1] = bitai[binarinis_ilgis - i - 3]; 
+        bitai[binarinis_ilgis - i - 3] = laikinas;
+    }
+
+    cout << "Bit bit: " << bitai << endl;
+
+        // Bandymas sugeneruoti daugiau 1 ir 0
+    for (int i = 0; i < binarinis_ilgis / 2; i++) {
+        if (bitai[i] == bitai[binarinis_ilgis - i - 1]) { // Patikriname ar pirmoji puse kodo lygi su kitaja
+            bitai[i] = 1; // Jeigu taip - rasome 1
+        } else {
+            bitai[i] = 0; // Jeigu ne - rasome 0
+        }
+    }
+    
+    cout << "Iui Iui: " << bitai << endl;
+
+    cout << "-----------------------------------------------------------------" << endl;
+}
+
 string hexPadarymas(bitset<256>& bitai) {
     stringstream ss;
 
@@ -107,7 +166,7 @@ void hashFunkcija(string simboliu_seka) {
         for (char simbolis : simboliu_seka) {
             //cout << "Simbolis " << simbolis << " uzkoduotas kaip " << (int)simbolis << " pagal ASCII" << endl;
             ascii_suma += (int)simbolis * daugiklis;
-            daugiklis++;
+            daugiklis = daugiklis * rand() % 10;
         }
 
         cout << "Padauginta ASCII suma yra: " << ascii_suma << endl;
@@ -121,7 +180,7 @@ void hashFunkcija(string simboliu_seka) {
         }
 
         // Gautas binary kodas isverciamas i ASCII tolimesniems skaiciavimams
-        int reiksmiu_suma = 0;
+        string reiksmiu_suma = "";
         for (int i = 0; i < 256; i += 8) {   
             int reiksme = 0; 
 
@@ -133,12 +192,32 @@ void hashFunkcija(string simboliu_seka) {
             reiksme += binarinis_kodas[i + 5] * 4;
             reiksme += binarinis_kodas[i + 6] * 2;
             reiksme += binarinis_kodas[i + 7] * 1;
-            reiksmiu_suma += reiksme + i; // Truputi paivairnta suma
+            reiksmiu_suma += to_string(reiksme); 
         }
 
         cout << "Ascii suma: " << reiksmiu_suma << endl;
 
-        string hexKodas = hexPadarymas(binarinis_kodas);
+        int ascii_suma_nauja = 0; // Naudojama ascii reiksmiu sumai
+        int dgkls = 0;
+        srand(123456);
+
+        for (char simbol : reiksmiu_suma) {
+            ascii_suma_nauja += ((int)simbol + rand() + ascii_suma) * dgkls; // Pridedami ascii_suma, nes ji yra kaip ir unikali
+            dgkls++;
+        }
+
+        cout << "Vel pakeista ASCII suma yra: " << ascii_suma_nauja << endl;
+
+        // Isverciame i binary
+        bitset<256> binar_kod((int)ascii_suma_nauja);
+        cout << "Padauginta ASCII suma pavaizduota kaip binarinis kodas: " << binar_kod << endl;
+        for (int i = 0; i < 7; i++)
+        {
+            bitaiKeiciasiVietomis2(binar_kod);
+        }
+
+
+        string hexKodas = hexPadarymas(binar_kod);
         cout << "Hash kodo atvaizdavimas hex pavidalu: " << hex << hexKodas << endl;
 }
 
