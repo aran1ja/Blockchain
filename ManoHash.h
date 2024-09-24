@@ -120,6 +120,24 @@ void hashFunkcija(string simboliu_seka) {
             bitaiKeiciasiVietomis(binarinis_kodas);
         }
 
+        // Gautas binary kodas isverciamas i ASCII tolimesniems skaiciavimams
+        int reiksmiu_suma = 0;
+        for (int i = 0; i < 256; i += 8) {   
+            int reiksme = 0; 
+
+            reiksme += binarinis_kodas[i] * 128; 
+            reiksme += binarinis_kodas[i + 1] * 64;
+            reiksme += binarinis_kodas[i + 2] * 32;
+            reiksme += binarinis_kodas[i + 3] * 16;
+            reiksme += binarinis_kodas[i + 4] * 8;
+            reiksme += binarinis_kodas[i + 5] * 4;
+            reiksme += binarinis_kodas[i + 6] * 2;
+            reiksme += binarinis_kodas[i + 7] * 1;
+            reiksmiu_suma += reiksme + i; // Truputi paivairnta suma
+        }
+
+        cout << "Ascii suma: " << reiksmiu_suma << endl;
+
         string hexKodas = hexPadarymas(binarinis_kodas);
         cout << "Hash kodo atvaizdavimas hex pavidalu: " << hex << hexKodas << endl;
 }
