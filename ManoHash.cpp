@@ -2,6 +2,7 @@
 
 int main() {
 
+srand(12456);
 int pasirinkimas;
 cout << "Sita programa yra skirta SHA256 generavimui." << endl;
 cout << "Paspaudus skaiciu issirinkite ka norite padaryti." << endl;
@@ -25,7 +26,7 @@ switch (pasirinkimas) {
     case 2:
     {
         cout << "Nuskaitomi 3 failai su vienu simboliu kiekviename. " << endl;
-        string simbolis1 = nuskaitymasIsFailo("simbolis_1.txt");
+        string simbolis1 = nuskaitymasIsFailo("simbolis_2.txt");
         hashFunkcija(simbolis1);
         cout << "-----------------------------------------------------------------" << endl;
         string simbolis2 = nuskaitymasIsFailo("simbolis_2.txt");
