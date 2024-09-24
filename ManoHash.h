@@ -4,6 +4,7 @@
 #include <sstream>
 #include <fstream>
 #include <string>
+#include <ctime>
 
 using namespace std;
 
@@ -91,7 +92,7 @@ string nuskaitymasIsFailo(string failoPavadinimas) {
     
     failas.close();
 
-    return turinys;;
+    return turinys;
 }
 
 void hashFunkcija(string simboliu_seka) {
@@ -121,4 +122,17 @@ void hashFunkcija(string simboliu_seka) {
 
         string hexKodas = hexPadarymas(binarinis_kodas);
         cout << "Hash kodo atvaizdavimas hex pavidalu: " << hex << hexKodas << endl;
+}
+
+string failoGeneravimas (string failoPavadinimas, int simboliu_sk) {
+    ofstream fail(failoPavadinimas);
+    string random_simboliai;
+    
+    for (int i = 0; i < simboliu_sk; i++) {
+        random_simboliai = rand() % 95 + 32; 
+        fail << random_simboliai;
+    }
+    
+    fail.close();
+    cout << "Sugeneruoto failo pavadinimas: " << failoPavadinimas << endl;
 }

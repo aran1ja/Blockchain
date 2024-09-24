@@ -37,9 +37,20 @@ switch (pasirinkimas) {
     }
     case 3:
     {
-        nuskaitymasIsFailo("simbolis_1.txt");
-        nuskaitymasIsFailo("simbolis_1.txt");
-        break;
+        int pasirinkti, pasirinkti1;
+        cout << "Ar norite sugeneruoti du naujus failus? Spauskite 1 - taip. Bet koks kitas skacius - ne." << endl; cin >> pasirinkti;
+        if (pasirinkti == 1) {
+            srand(time(0));
+            failoGeneravimas("sugeneruotas1.txt", 1050);
+            srand(time(0) + 1);
+            failoGeneravimas("sugeneruotas2.txt", 1050);
+        }
+
+        cout << "Ar norite tu failo hash'o? Spauskite 1 - taip. Bet koks kitas skacius - ne." << endl; cin >> pasirinkti1;
+        if (pasirinkti1 == 1) {
+            nuskaitymasIsFailo("sugeneruotas1.txt");
+            nuskaitymasIsFailo("sugeneruotas2.txt");
+        } else break;
     }
     case 4:
     {
