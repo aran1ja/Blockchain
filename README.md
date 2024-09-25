@@ -22,18 +22,19 @@ Po programos paleidimo atsidaro meniu, kuriame bus duotas pasirinkimas:
 4. Atidaryti du failus su 1000 simboliais, kurie tarpusavy skiriasi tik 1 simboliu.
 5. Atidaryti tuscia faila 'tuscias.txt'.
 6. Baigti darba.
+   
 Vartotojas galės padaryti pasirinkimą paspaudžius nurodytus skaičius.
 
 ## Eksperimentiniai tyrimai ir rezultatų analizė
-1. Patikrinimas ar mano hash funkcija atitinka reikalavimams a-c.
+### 1. Patikrinimas ar mano hash funkcija atitinka reikalavimams i-iii.
    * 1. Maišos funkcijos įėjimas gali būti bet kokio dydžio simbolių eilutė.
         
-     Tyrimas
+     #### Tyrimas
      
      Veiksmingiausias būdas patikrinti ar mano kodas veikia su bet kokio dydžio simbolių eilute - paleisti programą ir parašyti įvestis ranka / nuskaityti įvestis iš failų su skirtingais simbolių skaičiais.
      Turimi failai: _"simbolis_1.txt"_, _"simbolis_2.txt"_, _"simbolis_3.txt"_, _"tekstas_1000.txt"_, _"tekstas_1000_kitas.txt"_, _"tuscias.txt"_ ir yra du programos generuojami failai: _"sugeneruotas1.txt"_ ir     _"sugeneruotas2.txt"_.
       
-     Rezultatas
+     #### Rezultatas
      
      ![image](https://github.com/user-attachments/assets/547ff96a-0ffd-4e41-8ed4-e9a913a62d20)
      ![image](https://github.com/user-attachments/assets/2eedba46-41e0-46f0-9b4c-fb02e5a66154)
@@ -46,26 +47,41 @@ Vartotojas galės padaryti pasirinkimą paspaudžius nurodytus skaičius.
 
    * 2.	Maišos funkcijos išėjimas visuomet yra to paties, fiksuoto, dydžio rezultatas.
 
-     Tyrimas
+     #### Tyrimas
 
        Veiksmingiausias būdas patikrinti, kad išėjimas yra visuomet fiksuoto dydžio - tai paleisti programą ir parašyti įvestis ranka / nuskaityti įvestis iš failų su skirtingais simbolių skaičiais. Tai reikia tam, kad patikrinti, ar mano išėjimas nepriklauso nuo įėjimo dydžio.
 
-     Rezultatas
+     #### Rezultatas
      
      Remiantis aukščiau pateiktomis nuotraukomis, galima padaryti išvadą, kad mano išeiga visada yra tokio pačio dydžio, 64 bitų hex'as.
      
    * 3.	Maišos funkcija yra deterministinė - tam pačiam įvedimui išvedimas visuomet yra tas pats.
         
-     Tyrimas
+     #### Tyrimas
   
      Kad patikrinti ar mano maišos funkcija yra deterministinė, keletą kartų paleisių programą, ranka įrašysiu tą patį žodį "Laime" ir palyginsiu išeigas.
      
-     Rezultatas
+     #### Rezultatas
     ![image](https://github.com/user-attachments/assets/a8152450-b8a8-492f-8925-e243d856a640)
     1. Rezultatas: da803e22d9cb6a7ccde46deee3edc60490a4d4b9b3143adae29d8d3df16f874e
     2. Rezultatas: da803e22d9cb6a7ccde46deee3edc60490a4d4b9b3143adae29d8d3df16f874e
     3. Rezultatas: da803e22d9cb6a7ccde46deee3edc60490a4d4b9b3143adae29d8d3df16f874e
        
-   Kadangi įeigai "Laime" visos 3 išeigos yra identiškos, tai galima padaryti švadą, kad mano maišos funkcija yra deterministinė.
-2. 
+   Kadangi įeigai "Laime" visos 3 išeigos yra identiškos, tai galima padaryti išvadą, kad mano maišos funkcija yra deterministinė.
+   
+### 2. Patikrinimas ar mano hash'avimo funkcija atitinka 4-ą reikalavimą. 
+   Tuo tikslu paėmiau 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 789 eilučių iš failo _"konstitucija.txt"_, suhashinau ir išmatavau kiek laiko visa tai užtruko.
 
+   #### Rezultatai:
+
+   | Eilučių kiekis | 1   | 2   | 4   | 8   | 16   | 32   | 64   | 128   | 256   | 512   | 789   |
+   |----------------|-----|-----|-----|-----|------|------|------|-------|-------|-------|-------|
+   | Laikas (ms)    |1.380|1.600|3.444|7.167|14.632|29.421|53.420|132.591|244.460|461.397|715.276|
+   
+  Taip pat rezultatus galima peržiūrėti "HashavimoLaikas.png".
+
+  #### Išvada
+
+  Tyrimo rezultatai parodo, kad mano hash funkcija veikia greitai ir efektyviai, nes 789 eilučių hash'avimas užtruko 0.715s. Tačiau reikia patobulinti mano funkciją tam, kad pasiekti geresnį efektyvumą. Tai reikalinga dėl to, kad tuo atveju, kai bus didesni failai, mano hash funkcija veiks lėčiau nei tikėtasi.
+
+### 3.
