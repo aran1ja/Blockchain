@@ -4,7 +4,6 @@ int main() {
 
 srand(12456);
 int pasirinkimas;
-cout << "Sita programa yra skirta SHA256 generavimui." << endl;
 cout << "Paspaudus skaiciu issirinkite ka norite padaryti." << endl;
 cout << "1. Ivesti zodi arba simboli rankiniu budu." << endl;
 cout << "2. Atidaryti failus, sudarytus tik is vieno simbolio." << endl;
@@ -12,6 +11,7 @@ cout << "3. Atidaryti programos sugeneruotus failus, kuriuose yra > 1000 simboli
 cout << "4. Atidaryti du failus su 1000 simboliais, kurie tarpusavy skiriasi tik 1 simboliu." << endl;
 cout << "5. Atidaryti tuscia faila 'tuscias.txt'." << endl;
 cout << "6. Baigti darba." << endl;
+cout << "7. Sukurtas tyrimui su konstitucija.txt atlikti." << endl;
 cout << "Jusu pasirinkimas: "; cin >> pasirinkimas;
 
 switch (pasirinkimas) {
@@ -26,7 +26,7 @@ switch (pasirinkimas) {
     case 2:
     {
         cout << "Nuskaitomi 3 failai su vienu simboliu kiekviename. " << endl;
-        string simbolis1 = nuskaitymasIsFailo("simbolis_2.txt");
+        string simbolis1 = nuskaitymasIsFailo("simbolis_1.txt");
         hashFunkcija(simbolis1);
         cout << "-----------------------------------------------------------------" << endl;
         string simbolis2 = nuskaitymasIsFailo("simbolis_2.txt");
@@ -73,6 +73,11 @@ switch (pasirinkimas) {
     case 6:
     {
         cout << "Darbas baigtas." << endl;
+        break;
+    }
+    case 7 :
+    {
+        konstitucija("konstitucija.txt"); 
         break;
     }
     default: 

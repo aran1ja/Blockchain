@@ -5,8 +5,28 @@
 #include <fstream>
 #include <string>
 #include <ctime>
+#include <chrono>
+#include <vector>
+#include <unordered_map>
+#include <algorithm>
 
 using namespace std;
+
+string hexPadarymas(bitset<256>& bitai) {
+    stringstream ss;
+
+    for (int i = 0; i < 256; i += 4) // Paemame po 4 bitus is 256 tam, kad konvertuoti 4 bitus i 1 hex
+    {
+        int reiksme = 0; 
+        reiksme += bitai[i] * 8; 
+        reiksme += bitai[i + 1] * 4;
+        reiksme += bitai[i + 2] * 2;
+        reiksme += bitai[i + 3] * 1;
+
+        ss << hex << reiksme;
+    }
+    return ss.str();
+}
 
 // Pakeistas kodas, nes del praeitu bandymu hex'as jau nebuvo 
 void pakeitimasPo16bitus(bitset<256>& bitai, int reiksme_1, int reiksme_2) {
@@ -64,7 +84,7 @@ void bitaiKeiciasiVietomis(bitset<256>& bitai) {
 
     // Bandymas sugeneruoti daugiau 1 ir 0
     for (int i = 0; i < binarinis_ilgis / 2; i++) {
-        if (bitai[i] == bitai[binarinis_ilgis - i - 1]) { // Patikriname ar pirmoji puse kodo lygi su kitaja
+        if (bitai[i] == bitai[binarinis_ilgis - i - 1]) { // Patikriname ar pirmoji puse kodo lygi kodo galui
             bitai[i] = 1; // Jeigu taip - rasome 1
         } else {
             bitai[i] = 0; // Jeigu ne - rasome 0
@@ -75,12 +95,12 @@ void bitaiKeiciasiVietomis(bitset<256>& bitai) {
     // cout << "-----------------------------------------------------------------" << endl;
 }
 
-void hashFunkcija(string simboliu_seka) {
+string hashFunkcija(string simboliu_seka) {
         int ascii_suma = 0; // Naudojama ascii reiksmiu sumai
         int daugiklis = 1; // Bandysiu didinti daugiklio skaiciu ir dauginti ascii_suma per ji
     
         int ilgis = 8 * simboliu_seka.size(); // Simboliu sekos ilgis bitais
-        cout << "Simboliu seka yra: " << simboliu_seka << endl;
+        //cout << "Simboliu seka yra: " << simboliu_seka << endl;
         cout << "-----------------------------------------------------------------" << endl;
         // cout << "Jusu zodis susideda is " << ilgis << " bitu." << endl;
 
@@ -123,22 +143,6 @@ void hashFunkcija(string simboliu_seka) {
         cout << "Hash kodo atvaizdavimas hex pavidalu: " << hex << hexKodas << endl;
 }
 
-string hexPadarymas(bitset<256>& bitai) {
-    stringstream ss;
-
-    for (int i = 0; i < 256; i += 4) // Paemame po 4 bitus is 256 tam, kad konvertuoti 4 bitus i 1 hex
-    {
-        int reiksme = 0; 
-        reiksme += bitai[i] * 8; 
-        reiksme += bitai[i + 1] * 4;
-        reiksme += bitai[i + 2] * 2;
-        reiksme += bitai[i + 3] * 1;
-
-        ss << hex << reiksme;
-    }
-    return ss.str();
-}
-
 string nuskaitymasIsFailo(string failoPavadinimas) {
     ifstream failas(failoPavadinimas);
     if (!failas.is_open()) { 
@@ -166,3 +170,36 @@ string failoGeneravimas (string failoPavadinimas, int simboliu_sk) {
     fail.close();
     cout << "Sugeneruoto failo pavadinimas: " << failoPavadinimas << endl;
 }
+
+double laikoMatavimas(vector<string>& linijos) {
+    auto start = chrono::high_resolution_clock::now();
+    for (int i = 0; i < 5; i++)
+    {
+        for (const auto& linija : linijos) {
+            hashFunkcija(linija);
+        }
+    }
+    auto pabaiga = chrono::high_resolution_clock::now();
+    chrono::duration<double, milli> skirtumas = pabaiga - start;
+    return skirtumas.count() / 5; 
+}
+
+void konstitucija(const string& filename) {
+    ifstream file(filename);
+    vector<string> linijos; // Cia issaugomi duomenys
+    string linija;
+
+    while (getline(file, linija)) {
+        linijos.push_back(linija);
+    }
+
+    int linijuKiekis;
+    cout << "Kiek eiluciu norite hashuoti? (Max: " << linijos.size() << "): "; cin >> linijuKiekis;
+
+    vector<string> hashuojamos_eilutes(linijos.begin(), linijos.begin() + linijuKiekis);
+
+    double vidutinis_laikas = laikoMatavimas(hashuojamos_eilutes);
+    cout << "Vidutinis hashavimo laikas:  " << vidutinis_laikas << " milisekundziu." << endl;
+}
+
+
