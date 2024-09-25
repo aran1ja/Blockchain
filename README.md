@@ -62,7 +62,8 @@ Vartotojas galės padaryti pasirinkimą paspaudžius nurodytus skaičius.
      Kad patikrinti ar mano maišos funkcija yra deterministinė, keletą kartų paleisių programą, ranka įrašysiu tą patį žodį "Laime" ir palyginsiu išeigas.
      
      #### Rezultatas
-    ![image](https://github.com/user-attachments/assets/a8152450-b8a8-492f-8925-e243d856a640)
+  ![image](https://github.com/user-attachments/assets/a8152450-b8a8-492f-8925-e243d856a640)
+  
     1. Rezultatas: da803e22d9cb6a7ccde46deee3edc60490a4d4b9b3143adae29d8d3df16f874e
     2. Rezultatas: da803e22d9cb6a7ccde46deee3edc60490a4d4b9b3143adae29d8d3df16f874e
     3. Rezultatas: da803e22d9cb6a7ccde46deee3edc60490a4d4b9b3143adae29d8d3df16f874e
@@ -84,4 +85,20 @@ Vartotojas galės padaryti pasirinkimą paspaudžius nurodytus skaičius.
 
   Tyrimo rezultatai parodo, kad mano hash funkcija veikia greitai ir efektyviai, nes 789 eilučių hash'avimas užtruko 0.715s. Tačiau reikia patobulinti mano funkciją tam, kad pasiekti geresnį efektyvumą. Tai reikalinga dėl to, kad tuo atveju, kai bus didesni failai, mano hash funkcija veiks lėčiau nei tikėtasi.
 
-### 3.
+### 3. Patikrinimas ar mano hash'avimo funkcija atitinka 6-ą reikalavimą: ar mano funkcija yra atspari kolizijai.
+  Tuo tikslu sukuriau dvi funkcijas: _randomSimboliuGeneravimas_ ir _failuKurimas_. Antroje funkcijoje yra sukuriamas 100000 eilučių failas su random simboliais. Kiekvienoje eilutėje yra 2 poros simbolių sekų. Yra 25000 porų, kurių ilgis 10 simbolių, 25 000 porų, kurių ilgis - 100, 25000 porų - 500, ir 25000 porų - 1000 simbolių. Tam, kad ištirti ar mano kodas yra atsparus kolizijai, lyginau kiekvienos eilutės poros hash'us.
+
+      if (pirmasHash == antrasHash) {
+      kolizijuSkaicius++; 
+      }
+
+  #### Rezultatas
+
+  Paleidus programą, kiekvieną kartą kuriamas failas _"100000.txt"_ su naujomis poromis. Paleidžiau programą 5 kartus ir kiekvieną kartą gavau atsakymus "Koliziju skaicius: 0". Taigi mano maišos funkcija yra atspari kolizijai.
+  
+  ![image](https://github.com/user-attachments/assets/aa0e86e1-f049-4ef0-b534-b0cb64a85ff0)
+
+  Šioje nuotraukoje galima pamatyti tiek rezultatą, tiek paskutinių porų hash'us, kas įrodo, kad jie tikrai skiriasi vienas nuo kito.
+
+### 4. Mano gautų hash'ų procentinių "skirtingumų" įvertinimas
+### 5. Išvados
