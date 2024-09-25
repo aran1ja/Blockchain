@@ -12,7 +12,8 @@ cout << "4. Atidaryti du failus su 1000 simboliais, kurie tarpusavy skiriasi tik
 cout << "5. Atidaryti tuscia faila 'tuscias.txt'." << endl;
 cout << "6. Sukurtas tyrimui su konstitucija.txt atlikti." << endl;
 cout << "7. Patikrinti kolizijas." << endl;
-cout << "8. Baigti darba." << endl;
+cout << "8. Patikrinti lavinos efekta." << endl;
+cout << "9. Baigti darba." << endl;
 cout << "Jusu pasirinkimas: "; cin >> pasirinkimas;
 
 switch (pasirinkimas) {
@@ -81,6 +82,10 @@ switch (pasirinkimas) {
         failuKurimas("100000.txt");
     }
     case 8:
+    {
+        generuotiPoras("sukurtas.txt", 100000, 1000);
+    }
+    case 9:
     {
         cout << "Darbas baigtas." << endl;
         break;

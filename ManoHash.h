@@ -7,8 +7,8 @@
 #include <ctime>
 #include <chrono>
 #include <vector>
-#include <unordered_set>
 #include <algorithm>
+#include <numeric>
 
 using namespace std;
 
@@ -140,7 +140,7 @@ string hashFunkcija(string simboliu_seka) {
         // cout << "Ascii suma: " << reiksmiu_suma << endl;
 
         string hexKodas = hexPadarymas(binarinis_kodas);
-        //cout << "Hash kodo atvaizdavimas hex pavidalu: " << hex << hexKodas << endl;
+        cout << "Hash kodo atvaizdavimas hex pavidalu: " << hex << hexKodas << endl;
 }
 
 string nuskaitymasIsFailo(string failoPavadinimas) {
@@ -243,4 +243,30 @@ void failuKurimas(string failoPavadinimas) {
 
     failiukas.close();
     cout << "Koliziju skaicius: " << kolizijuSkaicius << endl;
+}
+
+string pakeistiVienasSimboli(string eilute) {
+    char simboliai[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    int pozicija = rand() % eilute.size(); // Atsitiktineje vietoje
+    eilute[pozicija] = simboliai[rand() % (sizeof(simboliai) - 1)]; // Keiciamas simbolis
+    return eilute;
+}
+
+void generuotiPoras(string failoPavadinimas, int poruKiekis, int maxIlgis) {
+    srand(time(0)); 
+    ofstream failiukas(failoPavadinimas);
+
+    if (!failiukas) {
+        cout << "Nepavyko sukurti failo!" << endl;
+        return;
+    }
+
+    for (int i = 0; i < poruKiekis; i++) {
+        string pirmas = randomSimboliuGeneravimas(rand() % maxIlgis + 1); 
+        string antras = pakeistiVienasSimboli(pirmas); 
+        failiukas << pirmas << " " << antras << endl;
+    }
+
+    failiukas.close();
+    cout << "Failas sukurtas. " << endl;
 }
