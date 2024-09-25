@@ -7,7 +7,7 @@
 #include <ctime>
 #include <chrono>
 #include <vector>
-#include <unordered_map>
+#include <unordered_set>
 #include <algorithm>
 
 using namespace std;
@@ -101,7 +101,7 @@ string hashFunkcija(string simboliu_seka) {
     
         int ilgis = 8 * simboliu_seka.size(); // Simboliu sekos ilgis bitais
         //cout << "Simboliu seka yra: " << simboliu_seka << endl;
-        cout << "-----------------------------------------------------------------" << endl;
+        //cout << "-----------------------------------------------------------------" << endl;
         // cout << "Jusu zodis susideda is " << ilgis << " bitu." << endl;
 
         // Zodis isverciamas i ASCII
@@ -140,7 +140,7 @@ string hashFunkcija(string simboliu_seka) {
         // cout << "Ascii suma: " << reiksmiu_suma << endl;
 
         string hexKodas = hexPadarymas(binarinis_kodas);
-        cout << "Hash kodo atvaizdavimas hex pavidalu: " << hex << hexKodas << endl;
+        //cout << "Hash kodo atvaizdavimas hex pavidalu: " << hex << hexKodas << endl;
 }
 
 string nuskaitymasIsFailo(string failoPavadinimas) {
@@ -216,23 +216,31 @@ string randomSimboliuGeneravimas(int poru_ilgis) {
 void failuKurimas(string failoPavadinimas) {
     srand(time(0)); 
     ofstream failiukas(failoPavadinimas); 
-    if (!failiukas)
-    {
+    if (!failiukas) {
         cout << "Nepavyko atidaryti failo: " << failoPavadinimas << endl;
         return;
     }
 
     int poros_ilgis[] = {10, 100, 500, 1000}; 
     int poru_kiekis[] = {25000, 25000, 25000, 25000}; 
-    vector<pair<string, string>> poros; 
+    int kolizijuSkaicius = 0; 
 
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < poru_kiekis[i]; j++) {
             string pirmasIsPoru = randomSimboliuGeneravimas(poros_ilgis[i]);
             string antrasIsPoru = randomSimboliuGeneravimas(poros_ilgis[i]);
-            failiukas << pirmasIsPoru << " " << antrasIsPoru << endl; 
-            poros.emplace_back(pirmasIsPoru, antrasIsPoru); 
+
+            string pirmasHash = hashFunkcija(pirmasIsPoru);
+            string antrasHash = hashFunkcija(antrasIsPoru);
+
+            if (pirmasHash == antrasHash) {
+                kolizijuSkaicius++; 
+            }
+
+            failiukas << pirmasIsPoru << " " << antrasIsPoru << endl;
         }
     }
-    failiukas.close(); 
+
+    failiukas.close();
+    cout << "Koliziju skaicius: " << kolizijuSkaicius << endl;
 }
