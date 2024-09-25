@@ -10,8 +10,9 @@ cout << "2. Atidaryti failus, sudarytus tik is vieno simbolio." << endl;
 cout << "3. Atidaryti programos sugeneruotus failus, kuriuose yra > 1000 simboliu." << endl;
 cout << "4. Atidaryti du failus su 1000 simboliais, kurie tarpusavy skiriasi tik 1 simboliu." << endl;
 cout << "5. Atidaryti tuscia faila 'tuscias.txt'." << endl;
-cout << "6. Baigti darba." << endl;
-cout << "7. Sukurtas tyrimui su konstitucija.txt atlikti." << endl;
+cout << "6. Sukurtas tyrimui su konstitucija.txt atlikti." << endl;
+cout << "7. Patikrinti kolizijas." << endl;
+cout << "8. Baigti darba." << endl;
 cout << "Jusu pasirinkimas: "; cin >> pasirinkimas;
 
 switch (pasirinkimas) {
@@ -72,12 +73,16 @@ switch (pasirinkimas) {
     }
     case 6:
     {
-        cout << "Darbas baigtas." << endl;
+        konstitucija("konstitucija.txt"); 
         break;
     }
-    case 7 :
+    case 7:
     {
-        konstitucija("konstitucija.txt"); 
+        failuKurimas("100000.txt");
+    }
+    case 8:
+    {
+        cout << "Darbas baigtas." << endl;
         break;
     }
     default: 

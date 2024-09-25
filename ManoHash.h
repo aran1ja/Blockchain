@@ -202,4 +202,37 @@ void konstitucija(const string& filename) {
     cout << "Vidutinis hashavimo laikas:  " << vidutinis_laikas << " milisekundziu." << endl;
 }
 
+string randomSimboliuGeneravimas(int poru_ilgis) {
+    char simboliukai[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    string sukurtasStringas;
+    
+    for (int i = 0; i < poru_ilgis; i++) {
+        sukurtasStringas += simboliukai[rand() % (sizeof(simboliukai) - 1)]; 
+    }
 
+    return sukurtasStringas;
+} 
+
+void failuKurimas(string failoPavadinimas) {
+    srand(time(0)); 
+    ofstream failiukas(failoPavadinimas); 
+    if (!failiukas)
+    {
+        cout << "Nepavyko atidaryti failo: " << failoPavadinimas << endl;
+        return;
+    }
+
+    int poros_ilgis[] = {10, 100, 500, 1000}; 
+    int poru_kiekis[] = {25000, 25000, 25000, 25000}; 
+    vector<pair<string, string>> poros; 
+
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < poru_kiekis[i]; j++) {
+            string pirmasIsPoru = randomSimboliuGeneravimas(poros_ilgis[i]);
+            string antrasIsPoru = randomSimboliuGeneravimas(poros_ilgis[i]);
+            failiukas << pirmasIsPoru << " " << antrasIsPoru << endl; 
+            poros.emplace_back(pirmasIsPoru, antrasIsPoru); 
+        }
+    }
+    failiukas.close(); 
+}
