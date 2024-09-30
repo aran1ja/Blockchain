@@ -50,16 +50,10 @@ void bitaiKeiciasiVietomis(bitset<256>& bitai) {
     //Bandymas sulauzyti toki dideli bloku 1 ir 0 kieki
     for (int i = 0; i < binarinis_ilgis; i++) {
     if (bitai[i] == 1) { 
-        if (bitai[(i + 15) % 256]) {
-            bitai[(i + 15) % 256] = 0; 
-        } else {
-            bitai[(i + 15) % 256] = 1; 
-        }
+        bitai[(i + 15) % 256].flip();      
     }
 }
     
-    //cout << "Bitukas: " << bitai << endl;
-
     // Bandymas sugeneruoti daugiau 1 ir 0
     for (int i = 0; i < binarinis_ilgis / 2; i++) {
         if (bitai[i] == bitai[binarinis_ilgis / 2 + i]) { // Patikriname ar pirmoji puse kodo lygi su kitaja
@@ -69,8 +63,6 @@ void bitaiKeiciasiVietomis(bitset<256>& bitai) {
         }
     }
     
-    // cout << "Bam bam: " << bitai << endl;
-
     pakeitimasPo16bitus(bitai,  0, 256);
     pakeitimasPo16bitus(bitai, 16, 240);
     pakeitimasPo16bitus(bitai, 32, 224);
@@ -79,8 +71,6 @@ void bitaiKeiciasiVietomis(bitset<256>& bitai) {
     pakeitimasPo16bitus(bitai, 80, 176);
     pakeitimasPo16bitus(bitai, 96, 160);
     pakeitimasPo16bitus(bitai, 112, 144);
-
-    // cout << "Bit bit: " << bitai << endl;
 
     // Bandymas sugeneruoti daugiau 1 ir 0
     for (int i = 0; i < binarinis_ilgis / 2; i++) {
@@ -92,7 +82,6 @@ void bitaiKeiciasiVietomis(bitset<256>& bitai) {
     }
     
     // cout << "Iui Iui: " << bitai << endl;
-    // cout << "-----------------------------------------------------------------" << endl;
 }
 
 string hashFunkcija(string simboliu_seka) {
@@ -122,7 +111,7 @@ string hashFunkcija(string simboliu_seka) {
             bitaiKeiciasiVietomis(binarinis_kodas_kopija);
         }
 
-/*        // Gautas binary kodas isverciamas i ASCII tolimesniems skaiciavimams
+/*       
         int reiksmiu_suma = 0;
         for (int i = 0; i < 256; i += 8) {   
             int reiksme = 0; 
@@ -138,10 +127,9 @@ string hashFunkcija(string simboliu_seka) {
             reiksmiu_suma += reiksme + i; // Truputi paivairnta suma
         }
 */
-        // cout << "Ascii suma: " << reiksmiu_suma << endl;
 
         string hexKodas = hexPadarymas(binarinis_kodas_kopija);
-        cout << "Hash kodo atvaizdavimas hex pavidalu: " << hex << hexKodas << endl;
+        //cout << "Hash kodo atvaizdavimas hex pavidalu: " << hex << hexKodas << endl;
 }
 
 string nuskaitymasIsFailo(string failoPavadinimas) {
