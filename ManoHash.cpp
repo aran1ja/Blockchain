@@ -23,6 +23,7 @@ switch (pasirinkimas) {
         string simboliai;
         cout << "Iveskite simboliu seka, kuria noretumete uzkoduoti: "; cin >> simboliai;
         hashFunkcija(simboliai);
+        hashFunkcijaSuDruska(simboliai);
         break;
     }
 
@@ -31,12 +32,15 @@ switch (pasirinkimas) {
         cout << "Nuskaitomi 3 failai su vienu simboliu kiekviename. " << endl;
         string simbolis1 = nuskaitymasIsFailo("simbolis_1.txt");
         hashFunkcija(simbolis1);
+        hashFunkcijaSuDruska(simbolis1);
         cout << "-----------------------------------------------------------------" << endl;
         string simbolis2 = nuskaitymasIsFailo("simbolis_2.txt");
         hashFunkcija(simbolis2);
+        hashFunkcijaSuDruska(simbolis2);
         cout << "-----------------------------------------------------------------" << endl;
         string simbolis3 = nuskaitymasIsFailo("simbolis_3.txt");
         hashFunkcija(simbolis3);
+        hashFunkcijaSuDruska(simbolis3);
         break;
     }
     case 3:

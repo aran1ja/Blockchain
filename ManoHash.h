@@ -107,7 +107,45 @@ string hashFunkcija(string simboliu_seka) {
         }
         
         string hexKodas = hexPadarymas(binarinis_kodas_kopija);
-        //cout << "Hash kodo atvaizdavimas hex pavidalu: " << hex << hexKodas << endl;
+        cout << "Hash kodo atvaizdavimas hex pavidalu: " << hex << hexKodas << endl;
+        return hexKodas;
+}
+
+string druskosPridejimas(int ilgis) {
+    srand(12345);
+    char simboliai[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    string druska;
+
+    for (int i = 0; i < ilgis; i++) {
+        druska += simboliai[rand() % (sizeof(simboliai) - 1)];
+    }
+
+    return druska;
+}
+
+string hashFunkcijaSuDruska(string simboliu_seka) {
+        int ascii_suma = 0; 
+        int daugiklis = 1; 
+
+        string druska = druskosPridejimas(16);
+        string simboliu_seka_su_druska = simboliu_seka + druska;
+        int ilgis = 8 * simboliu_seka_su_druska.size();
+
+        // Zodis isverciamas i ASCII
+        for (char simbolis : simboliu_seka_su_druska) {
+            ascii_suma += (int)simbolis * daugiklis;
+            daugiklis++;
+        }
+
+        bitset<256> binarinis_kodas((int)ascii_suma);
+        bitset<256> binarinis_kodas_kopija = binarinis_kodas; 
+        for (int i = 0; i < 3; i++)
+        {
+            bitaiKeiciasiVietomis(binarinis_kodas_kopija);
+        }
+        
+        string hexKodas = hexPadarymas(binarinis_kodas_kopija);
+        //cout << "Hash kodas su druska hex pavidalu:    " << hex << hexKodas << endl;
         return hexKodas;
 }
 
@@ -198,8 +236,8 @@ void failuKurimas(string failoPavadinimas) {
             string pirmasIsPoru = randomSimboliuGeneravimas(poros_ilgis[i]);
             string antrasIsPoru = randomSimboliuGeneravimas(poros_ilgis[i]);
 
-            string pirmasHash = hashFunkcija(pirmasIsPoru);
-            string antrasHash = hashFunkcija(antrasIsPoru);
+            string pirmasHash = hashFunkcijaSuDruska(pirmasIsPoru);
+            string antrasHash = hashFunkcijaSuDruska(antrasIsPoru);
 
             if (pirmasHash == antrasHash) {
                 kolizijuSkaicius++; 
