@@ -255,19 +255,23 @@ Kadangi buvo nors ir minimalūs kodo pakeitimai, tačiau reikėtų vėl patikrin
 Iš to seka, kad mano maišos funkcija yra atspari kolizijai. Čia matomi paskutinių porų hash'ai, kas įrodo, kad jie tikrai skiriasi vienas nuo kito.
 
 ### 4. Mano gautų hash'ų procentinių "skirtingumų" įvertinimas
-  Reikia ištirti ar mano maišos funkcija turi lavinos efektą. Tai reiškia, kad bent minimalus pakeitimas mano įvestyje, turi duoti išvestis, kurios labai skirsis viena nuo kitos. Kadangi man nepavyko įgyvendinti kodo, kuris tirtų skirtingas įvestis ir skaičiuotų procentinį "skirtingumą" bitų lygmenyje ir hex'ų lygmenyje, išvestų minimalią, maksimalią ir vidurkines "skirtingumo" reikšmes, nusprendžiau padaryti tai įvedama žodžius ranka. Poros, kurias tikrinsiu:
-
-   
+  Reikia ištirti ar mano maišos funkcija turi lavinos efektą. Tai reiškia, kad bent minimalus pakeitimas mano įvestyje, turi duoti išvestis, kurios labai skirsis viena nuo kitos. Man pavyko įgyvendinti kodą, todėl padarysiu testą su v0.1 versija ir su v0.2.
 
   #### Rezultatai
-
-      
-
+     
+v0.1 versija:
 | Min hex skirtumas  | Max hex skirtumas  | Vid hex skirtumas  | Min bit skirtumas  | Max bit skirtumas  | Vid bit skirtumas  |
 |--------------------|--------------------|--------------------|--------------------|--------------------|--------------------|
-| 3.125%             | 9.375%             | 5.469%             | 42.969%            | 51.953%            | 49.023%            |
+| 78.125%            | 100%               | 93.7953%           | 32.0312%           | 62.5%              | 50.0411%           |
+
+v0.2 versija:
+| Min hex skirtumas  | Max hex skirtumas  | Vid hex skirtumas  | Min bit skirtumas  | Max bit skirtumas  | Vid bit skirtumas  |
+|--------------------|--------------------|--------------------|--------------------|--------------------|--------------------|
+| 25%                | 100%               | 92.0849%           | 9.375%             | 62.8906%           | 48.7188%           |
   
-Pagal gautus rezultatus galima padaryti išvadą, kad mano maišos funkcija turi gerą lavinos efektą. Tačiau reikia atsižvelgti į tai, kad dėl žmogiškaus faktorio, skaičiavimuose gali būti klaidų. Ir labai didelė tikimybė, kad patikrinus 100000 eilučių porų, rezultatai labai skirsis nuo pateiktųjų.
+Pagal gautus rezultatus galima padaryti išvadą, kad mano maišos funkcija turi gerą lavinos efektą, nes hex vidutinis skirtumas yra virš 90%, o bit skirtumas yra apie 50%. Galima pastebėti, kad v0.2 minimalieji skirtumai yra daug mažesni už minimalius skirtumus v0.1 versijoje. Tai tikriausiai atsitiko dėl to, kad yra skirtingas skaičiavimų ciklų kiekis. Tačiau vidutiniai ir maksimalieji skirtumai parodo, kad programa vis tiek veikia efektyviai.
 
 ### 5. Išvados
-Mano hash funkcija atitinka visiems reikalavimams. Tačiau ji galėtų veikti daug greičiau. Ir reikėtų sukurti programą, kuri geriau patikrintų lavinos efektą. Taip pastebjau, kad įrašant ranka simbolius, pvz "A" ir nuskaitant tą patį simbolį, gaunu skirtingus hex'us.
+Patobulinusi kodą ir maišos funkciją, galiu padaryti išvadą, kad ji atitinka visiems reikalavimams. Pasirodo, kad ir v0.1 gerai veikė, tačiau sumažinus ciklų kiekį gavau maišos funkciją, kuri veikia beveik du kartus greičiau už praeitą. Mano maišos funkcijos stiprybės: nėra kolizijų net tarp 100000 porų ir yra didelis skirtingumas tarp tų porų hash kodų, nors jie (simbolių sekų poros) ir skyrėsi tik 1 simboliu.
+
+# Papildomos užduotys
