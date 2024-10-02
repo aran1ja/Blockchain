@@ -216,7 +216,15 @@ void failuKurimas(string failoPavadinimas) {
 string pakeistiVienasSimboli(string eilute) {
     char simboliai[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     int pozicija = rand() % eilute.size(); // Atsitiktineje vietoje
-    eilute[pozicija] = simboliai[rand() % (sizeof(simboliai) - 1)]; // Keiciamas simbolis
+    char naujasSimbolis;
+
+    //Atsitiktinai generuojame nauja simboli naujasSimbolis iš simboliai masyvo, 
+    //Taciau dabar is karto patikrina ar naujas simbolis nelygus senajam
+    do {
+        naujasSimbolis = simboliai[rand() % (sizeof(simboliai) - 1)]; // Keiciamas simbolis
+    } while (naujasSimbolis == eilute[pozicija]); 
+
+    eilute[pozicija] = naujasSimbolis; 
     return eilute;
 }
 
@@ -273,8 +281,8 @@ void generuotiPoras( string failoPavadinimas) {
     vector<int> ilgiai = {10, 100, 500, 1000}; 
     int poruKiekis = 25000; 
 
-    float minBit = 0, maxBit = 0, vidBit = 0;
-    float minHex = 0, maxHex = 0, vidHex = 0;
+    float minBit = 100, maxBit = 0, vidBit = 0;
+    float minHex = 100, maxHex = 0, vidHex = 0;
 
     for (const auto& maxIlgis : ilgiai) {
         for (int i = 0; i < poruKiekis; i++) {
@@ -328,4 +336,3 @@ void generuotiPoras( string failoPavadinimas) {
 
     failiukas.close();
 }
-// Min skirtumas rodo 0%, kas negali buti, nes nera koliziju
