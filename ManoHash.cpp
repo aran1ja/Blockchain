@@ -84,7 +84,7 @@ switch (pasirinkimas) {
     }
     case 8:
     {
-        generuotiPoras("sukurtas.txt", 100000, 1000);
+        generuotiPoras("lavina.txt");
         break;
     }
     case 9:

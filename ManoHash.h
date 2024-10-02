@@ -8,7 +8,7 @@
 #include <chrono>
 #include <vector>
 #include <algorithm>
-#include <numeric>
+#include <numeric>   
 
 using namespace std;
 
@@ -28,7 +28,6 @@ string hexPadarymas(bitset<256>& bitai) {
     return ss.str();
 }
 
-// Pakeistas kodas, nes del praeitu bandymu hex'as jau nebuvo 
 void pakeitimasPo16bitus(bitset<256>& bitai, int reiksme_1, int reiksme_2) {
     for (int i = 0; i < 16; i++) {
         bool laikinas = bitai[reiksme_1 + i];
@@ -47,12 +46,11 @@ void bitaiKeiciasiVietomis(bitset<256>& bitai) {
         bitai[binarinis_ilgis - i - 1] = laikinas;
     }
 
-    //Bandymas sulauzyti toki dideli bloku 1 ir 0 kieki
     for (int i = 0; i < binarinis_ilgis; i++) {
-    if (bitai[i] == 1) { 
-        bitai[(i + 15) % 256].flip();      
+        if (bitai[i] == 1) { 
+            bitai[(i + 15) % 256].flip();    
+        }
     }
-}
     
     // Bandymas sugeneruoti daugiau 1 ir 0
     for (int i = 0; i < binarinis_ilgis / 2; i++) {
@@ -72,7 +70,6 @@ void bitaiKeiciasiVietomis(bitset<256>& bitai) {
     pakeitimasPo16bitus(bitai, 96, 160);
     pakeitimasPo16bitus(bitai, 112, 144);
 
-    // Bandymas sugeneruoti daugiau 1 ir 0
     for (int i = 0; i < binarinis_ilgis / 2; i++) {
         if (bitai[i] == bitai[binarinis_ilgis - i - 1]) { // Patikriname ar pirmoji puse kodo lygi kodo galui
             bitai[i] = 1; // Jeigu taip - rasome 1
@@ -81,12 +78,12 @@ void bitaiKeiciasiVietomis(bitset<256>& bitai) {
         }
     }
     
-    // cout << "Iui Iui: " << bitai << endl;
+    //cout << "Binarinis kodas: " << bitai << endl;
 }
 
 string hashFunkcija(string simboliu_seka) {
         int ascii_suma = 0; // Naudojama ascii reiksmiu sumai
-        int daugiklis = 1; // Bandysiu didinti daugiklio skaiciu ir dauginti ascii_suma per ji
+        int daugiklis = 1; 
     
         int ilgis = 8 * simboliu_seka.size(); // Simboliu sekos ilgis bitais
         //cout << "Simboliu seka yra: " << simboliu_seka << endl;
@@ -100,8 +97,6 @@ string hashFunkcija(string simboliu_seka) {
             daugiklis++;
         }
 
-        // cout << "Padauginta ASCII suma yra: " << ascii_suma << endl;
-
         // Ascii_suma isverciama i binary
         bitset<256> binarinis_kodas((int)ascii_suma);
         bitset<256> binarinis_kodas_kopija = binarinis_kodas; // Kuriama kopija
@@ -110,26 +105,10 @@ string hashFunkcija(string simboliu_seka) {
         {
             bitaiKeiciasiVietomis(binarinis_kodas_kopija);
         }
-
-/*       
-        int reiksmiu_suma = 0;
-        for (int i = 0; i < 256; i += 8) {   
-            int reiksme = 0; 
-
-            reiksme += binarinis_kodas[i] * 128; 
-            reiksme += binarinis_kodas[i + 1] * 64;
-            reiksme += binarinis_kodas[i + 2] * 32;
-            reiksme += binarinis_kodas[i + 3] * 16;
-            reiksme += binarinis_kodas[i + 4] * 8;
-            reiksme += binarinis_kodas[i + 5] * 4;
-            reiksme += binarinis_kodas[i + 6] * 2;
-            reiksme += binarinis_kodas[i + 7] * 1;
-            reiksmiu_suma += reiksme + i; // Truputi paivairnta suma
-        }
-*/
-
+        
         string hexKodas = hexPadarymas(binarinis_kodas_kopija);
         //cout << "Hash kodo atvaizdavimas hex pavidalu: " << hex << hexKodas << endl;
+        return hexKodas;
 }
 
 string nuskaitymasIsFailo(string failoPavadinimas) {
@@ -140,8 +119,8 @@ string nuskaitymasIsFailo(string failoPavadinimas) {
     }
 
     string turinys;
-    while (getline(failas, turinys))
-    
+    while (getline(failas, turinys))  
+
     failas.close();
 
     return turinys;
@@ -188,7 +167,7 @@ void konstitucija(const string& filename) {
     vector<string> hashuojamos_eilutes(linijos.begin(), linijos.begin() + linijuKiekis);
 
     double vidutinis_laikas = laikoMatavimas(hashuojamos_eilutes);
-    cout << "Vidutinis hashavimo laikas:  " << vidutinis_laikas << " milisekundziu." << endl;
+    cout << "Vidutinis hashavimo laikas: " << vidutinis_laikas << " milisekundziu." << endl;
 }
 
 string randomSimboliuGeneravimas(int poru_ilgis) {
@@ -241,21 +220,112 @@ string pakeistiVienasSimboli(string eilute) {
     return eilute;
 }
 
-void generuotiPoras(string failoPavadinimas, int poruKiekis, int maxIlgis) {
-    srand(time(0)); 
-    ofstream failiukas(failoPavadinimas);
+bitset<256> hexIBitus(string hexString) {
+    bitset<256> bituktukai; 
 
+    for (size_t i = 0; i < hexString.size(); ++i) {
+        char hexChar = hexString[i];
+        int value;
+
+        switch (hexChar) {
+            case '0': value = 0; break;
+            case '1': value = 1; break;
+            case '2': value = 2; break;
+            case '3': value = 3; break;
+            case '4': value = 4; break;
+            case '5': value = 5; break;
+            case '6': value = 6; break;
+            case '7': value = 7; break;
+            case '8': value = 8; break;
+            case '9': value = 9; break;
+            case 'a': value = 10; break;
+            case 'b': value = 11; break;
+            case 'c': value = 12; break;
+            case 'd': value = 13; break;
+            case 'e': value = 14; break;
+            case 'f': value = 15; break;
+            case 'A': value = 10; break;
+            case 'B': value = 11; break;
+            case 'C': value = 12; break;
+            case 'D': value = 13; break;
+            case 'E': value = 14; break;
+            case 'F': value = 15; break;
+            default : cout << "Neteisinga reiksme." << endl;
+        }
+
+        int startBitIndex = i * 4; // Kiekvienas hex simbolis atitinka 4 bitams binary sistemoje
+        bituktukai[startBitIndex + 3] = (value >> 3) & 1; // 8
+        bituktukai[startBitIndex + 2] = (value >> 2) & 1; // 4
+        bituktukai[startBitIndex + 1] = (value >> 1) & 1; // 2
+        bituktukai[startBitIndex]     = (value >> 0) & 1; // 1
+    }
+
+    return bituktukai; 
+}
+
+void generuotiPoras( string failoPavadinimas) {
+    ofstream failiukas(failoPavadinimas); 
     if (!failiukas) {
-        cout << "Nepavyko sukurti failo!" << endl;
+        cout << "Nepavyko sukurti failo." << endl;
         return;
     }
 
-    for (int i = 0; i < poruKiekis; i++) {
-        string pirmas = randomSimboliuGeneravimas(rand() % maxIlgis + 1); 
-        string antras = pakeistiVienasSimboli(pirmas); 
-        failiukas << pirmas << " " << antras << endl;
+    vector<int> ilgiai = {10, 100, 500, 1000}; 
+    int poruKiekis = 25000; 
+
+    float minBit = 0, maxBit = 0, vidBit = 0;
+    float minHex = 0, maxHex = 0, vidHex = 0;
+
+    for (const auto& maxIlgis : ilgiai) {
+        for (int i = 0; i < poruKiekis; i++) {
+            string pirmas = randomSimboliuGeneravimas(maxIlgis);
+            string antras = pakeistiVienasSimboli(pirmas);
+            failiukas << pirmas << " " << antras << endl;
+
+            string hash1 = hashFunkcija(pirmas);
+            string hash2 = hashFunkcija(antras);
+
+            auto bitai1 = hexIBitus(hash1);
+            auto bitai2 = hexIBitus(hash2);
+            
+            // Hex skirtumas
+            size_t hexKiekis = 0;
+            for (size_t j = 0; j < hash1.length(); j++) {
+                if (hash1[j] != hash2[j])
+                    hexKiekis++;
+            }
+            float hexSkirtumas = (hexKiekis * 100.0) / 64; 
+            minHex = min(minHex, hexSkirtumas);
+            maxHex = max(maxHex, hexSkirtumas);
+            vidHex += hexSkirtumas;
+
+            // Bitu skirtumas
+            size_t bitKiekis = 0;
+            for (size_t j = 0; j < bitai1.size(); j++) {
+                if (bitai1[j] != bitai2[j]) {
+                    bitKiekis++; 
+                }
+            }
+            float bitSkirtumas = (bitKiekis * 100.0) / 256; 
+            minBit = min(minBit, bitSkirtumas);
+            maxBit = max(maxBit, bitSkirtumas);
+            vidBit += bitSkirtumas;
+        }
     }
 
+    vidBit = vidBit / (poruKiekis * ilgiai.size());
+    vidHex = vidHex / (poruKiekis * ilgiai.size());
+
+    cout << "Bit skirtumas. " << endl;
+    cout << "Min skirtumas: " << minBit << "%" << endl;
+    cout << "Max skirtumas: " << maxBit << "%" << endl;
+    cout << "Vid skirtumas: " << vidBit << "%" << endl;
+    cout << "----------------------------" << endl;
+    cout << "Hex skirtumas. " << endl;
+    cout << "Min skirtumas: " << minHex << "%" << endl;
+    cout << "Max skirtumas: " << maxHex << "%" << endl;
+    cout << "Vid skirtumas: " << vidHex << "%" << endl;
+
     failiukas.close();
-    cout << "Failas sukurtas. " << endl;
 }
+// Min skirtumas rodo 0%, kas negali buti, nes nera koliziju
