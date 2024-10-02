@@ -275,3 +275,41 @@ Pagal gautus rezultatus galima padaryti išvadą, kad mano maišos funkcija turi
 Patobulinusi kodą ir maišos funkciją, galiu padaryti išvadą, kad ji atitinka visiems reikalavimams. Pasirodo, kad ir v0.1 gerai veikė, tačiau sumažinus ciklų kiekį gavau maišos funkciją, kuri veikia beveik du kartus greičiau už praeitą. Mano maišos funkcijos stiprybės: nėra kolizijų net tarp 100000 porų ir yra didelis skirtingumas tarp tų porų hash kodų, nors jie (simbolių sekų poros) ir skyrėsi tik 1 simboliu.
 
 # Papildomos užduotys
+### 1. Mano hash funkcijos palyginimas su SHA256
+* SHA256 kodą panaudojau iš svetainės: http://www.zedwood.com/article/cpp-sha256-function.
+* Daugiau apie SHA256 sužinojau iš https://infosecwriteups.com/breaking-down-sha-256-algorithm-2ce61d86f7a3.
+
+
+Turiu du variantus kaip galima palyginti mano funkcijos spartą su SHA256 sparta:
+#### Nuskaityti konstitucija.txt failą
+Mano hash funkcija:
+
+   | Eilučių kiekis | 1   | 2   | 4   | 8   | 16  | 32  | 64  | 128  | 256  | 512  | 789  |
+   |----------------|-----|-----|-----|-----|-----|-----|-----|------|------|------|------|
+   | Laikas (ms)    |0.199|0.201|0.401|0.808|2.001|3.600|7.600|16.012|29.217|55.970|89.002|
+
+SHA256:
+
+   | Eilučių kiekis | 1   | 2   | 4   | 8   | 16  | 32  | 64  | 128 | 256 | 512 | 789 |
+   |----------------|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|
+   | Laikas (ms)    |0    |0    |0    |0.191|0.200|0.219|0.417|0.818|1.817|2.216|3.200|
+
+#### Sukurti įvairių didžių failus (0, 10.000, 50.000, 100.000, 250.000, 500.000)
+Tam sukuriau kodą, kuris generuoja nurodytą eilučių kiekį ir kiekvienoje eilutėje yra po 10 simbolių.
+
+Mano hash funkcija:
+
+   | Eilučių kiekis |  0  | 10000   | 50000   | 100000   | 250000  | 500000  |
+   |----------------|-----|---------|---------|----------|---------|---------|
+   | Laikas (ms)    |  0  | 1036.39 | 5317.59 | 10983.5  | 26172.5 | 60405.1 |
+
+SHA256:
+
+   | Eilučių kiekis |  0  | 10000   | 50000   | 100000   | 250000  | 500000  |
+   |----------------|-----|---------|---------|----------|---------|---------|
+   | Laikas (ms)    |  0  | 34.5958 | 173.015 | 339.079  | 899.645 | 1859.44 |
+
+   Taip pat rezultatus galima peržiūrėti "ManoHashvsSHA256.png".
+   
+#### Išvada
+Kadangi palyginimui buvo panaudotas tas pats kodas ir tie patys failai, tai rezultatas gaunasi tikslesnis ir objektivesnis: SHA256 hashavo eilutes 29-32.5 kartų greičiau negu mano maišos funkcija.
