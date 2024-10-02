@@ -14,6 +14,7 @@ cout << "6. Sukurtas tyrimui su konstitucija.txt atlikti." << endl;
 cout << "7. Patikrinti kolizijas." << endl;
 cout << "8. Patikrinti lavinos efekta." << endl;
 cout << "9. Baigti darba." << endl;
+cout << "10. Kodas palyginimui su SHA256." << endl;
 cout << "Jusu pasirinkimas: "; cin >> pasirinkimas;
 
 switch (pasirinkimas) {
@@ -91,6 +92,56 @@ switch (pasirinkimas) {
     {
         cout << "Darbas baigtas." << endl;
         break;
+    }
+    case 10:
+    {
+        int pasirinkimas3;
+
+            cout << "Kuri faila norite nuskaityti?" << endl;
+            cout << "1. Tuscia." << endl;
+            cout << "2. 10.000 failu." << endl; 
+            cout << "3. 50.000 failu." << endl; 
+            cout << "4. 100.000 failu." << endl; 
+            cout << "5. 250.000 failu." << endl; 
+            cout << "6. 500.000 failu." << endl; 
+            cout << "Jusu pasirinkimas: "; cin >> pasirinkimas3; 
+            switch (pasirinkimas3)
+            {
+            case 1:
+            {
+                konstitucija("tuscias.txt");
+                break;
+            }
+            case 2:
+            {
+                konstitucija("kurti_10000.txt");
+                break;
+            }
+            case 3:
+            {
+                konstitucija("kurti_50000.txt");
+                break;
+            }
+            case 4:
+            {
+                konstitucija("kurti_100000.txt");
+                break;
+            }
+            case 5:
+            {
+                konstitucija("kurti_250000.txt");
+                break;
+            }
+            case 6:
+            {
+                konstitucija("kurti_500000.txt");
+                break;
+            }
+            
+            default:
+                break;
+            }
+            break;
     }
     default: 
     {

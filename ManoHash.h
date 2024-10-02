@@ -101,7 +101,7 @@ string hashFunkcija(string simboliu_seka) {
         bitset<256> binarinis_kodas((int)ascii_suma);
         bitset<256> binarinis_kodas_kopija = binarinis_kodas; // Kuriama kopija
         //cout << "Padauginta ASCII suma pavaizduota kaip binarinis kodas: " << binarinis_kodas << endl;
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 3; i++)
         {
             bitaiKeiciasiVietomis(binarinis_kodas_kopija);
         }
