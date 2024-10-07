@@ -143,3 +143,52 @@ SHA256:
 Kadangi palyginimui buvo panaudotas tas pats kodas ir tie patys failai, tai rezultatas gaunasi tikslesnis ir objektivesnis: SHA256 hashavo eilutes 29-32.5 kartų greičiau negu mano maišos funkcija.
 
 ### 2. Patikrinimas ar neįmanoma atgaminti pradinio įvedimo - patikrinti hiding ir puzzle- friendliness savybes
+#### Hiding
+**Hash hiding** - tai technika, naudojama užkirsti kelią tiesioginiam hash vertės atskleidimui. Tai daroma, kad būtų apsaugoti duomenys, kad net jei hash yra atskleistas, būtų sunku atkurti originalius duomenis. Tam tisklui panaudojau druską (angl. salt).
+
+**Druska** - atsitiktinis duomenų rinkinys, kuris pridedamas prie simbolių sekos prieš ją užhashuojant. Pagrindinė druskos funkcija yra padidinti saugumą ir apsaugoti nuo atakų. Mano druskos kodas:
+
+      string druskosPridejimas(int ilgis) {
+          char simboliai[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+          string druska;
+      
+          for (int i = 0; i < ilgis; i++) {
+              druska += simboliai[rand() % (sizeof(simboliai) - 1)]; 
+          }
+      
+          return druska;
+      }
+      
+      string hashFunkcijaSuDruska(string simboliu_seka) {
+              int ascii_suma = 0; 
+              int daugiklis = 1; 
+      
+              string druska = druskosPridejimas(16);
+              string simboliu_seka_su_druska = simboliu_seka + druska;
+              int ilgis = 8 * simboliu_seka_su_druska.size();
+      
+              // Zodis isverciamas i ASCII
+              for (char simbolis : simboliu_seka_su_druska) {
+                  ascii_suma += (int)simbolis * daugiklis;
+                  daugiklis++;
+              }
+      
+              bitset<256> binarinis_kodas((int)ascii_suma);
+              bitset<256> binarinis_kodas_kopija = binarinis_kodas; 
+              for (int i = 0; i < 3; i++)
+              {
+                  bitaiKeiciasiVietomis(binarinis_kodas_kopija);
+              }
+              
+              string hexKodas = hexPadarymas(binarinis_kodas_kopija);
+              //cout << "Hash kodas su druska hex pavidalu:    " << hex << hexKodas << endl;
+              return druska + hexKodas;
+      }
+
+Tam, kad patikrinti mano hash funkcijoje realizuotą hiding savybę, nusprendžiau nuskaityti 100.000 identiškų string porų. Yra 25000 porų po 10 simbolių, po 100, 500 ir 1000. Jeigu druska gerai veikia, tai tarp hex'ų turėtų būti 100.000 kolizijų, kas įrodytų dar kartą, kad mano maišos funkcija yra deterministinė. Tačiau tarp hex'ų su druska turėtų būti 0 kolizijų.
+
+#### Rezultatai
+![image](https://github.com/user-attachments/assets/28ec889e-9f45-429a-a310-000246d09123)
+
+#### Išvada
+Pagal rezultatus galima padaryti išvadą, kad mano maišos funkcija turi gerą deterministinę ir hiding savybes, nes kiekvienai identiškai porai stringų yra 100.000 hex kolizijų ir 0 hex + druskos kolizijų. Tai reiškia, kad kiekvienai tai pačiai įvesčiai yra tokia pati hex išvestis. Tačiau druska pakeičia hex taip, kad praktiškai neįmanoma atgaminti pradinio įvedimo ar jo hex'o.
