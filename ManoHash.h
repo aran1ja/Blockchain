@@ -9,7 +9,7 @@
 #include <vector>
 #include <algorithm>
 #include <numeric>   
-#include <random>   
+#include <unordered_map>      
 
 using namespace std;
 
@@ -236,8 +236,8 @@ void failuKurimas(string failoPavadinimas) {
             string pirmasIsPoru = randomSimboliuGeneravimas(poros_ilgis[i]);
             string antrasIsPoru = randomSimboliuGeneravimas(poros_ilgis[i]);
 
-            string pirmasHash = hashFunkcija(pirmasIsPoru);
-            string antrasHash = hashFunkcija(antrasIsPoru);
+            string pirmasHash = hashFunkcijaSuDruska(pirmasIsPoru);
+            string antrasHash = hashFunkcijaSuDruska(antrasIsPoru);
 
             if (pirmasHash == antrasHash) {
                 kolizijuSkaicius++; 
@@ -290,6 +290,33 @@ void druskosKolizijos(string failoPavadinimas) {
     failiukas.close();
     cout << "Hash koliziju skaicius: " << kolizijuSkaicius << endl;
     cout << "Hash + salt koliziju skaicius: " << saltKolizijuSkaicius << endl;
+}
+
+void puzzleFriendlinessKolizijos(string failoPavadinimas, int skaicius) {
+    unordered_map<string, string> hashai; // Hash'ams saugoti
+    int kolizijuSkaicius = 0;
+
+    ofstream failiukas(failoPavadinimas); 
+    if (!failiukas) {
+        cout << "Nepavyko atidaryti failo: " << failoPavadinimas << endl;
+        return;
+    }
+
+    for (int i = 0; i < skaicius; i++) {
+        string ivestis = "labas" + to_string(i);
+        string ivestiesHash = hashFunkcijaSuDruska(ivestis);
+
+        if (hashai.find(ivestiesHash) != hashai.end()) {
+            kolizijuSkaicius++; 
+        } else {
+            hashai[ivestiesHash] = ivestis; 
+        }
+
+        failiukas << ivestis << " " << ivestiesHash << endl; 
+    }
+
+    failiukas.close();
+    cout << "Koliziju skaicius: " << kolizijuSkaicius << endl;
 }
 
 string pakeistiVienasSimboli(string eilute) {
@@ -350,7 +377,7 @@ bitset<256> hexIBitus(string hexString) {
     return bituktukai; 
 }
 
-void generuotiPoras( string failoPavadinimas) {
+void generuotiPoras(string failoPavadinimas) {
     ofstream failiukas(failoPavadinimas); 
     if (!failiukas) {
         cout << "Nepavyko sukurti failo." << endl;

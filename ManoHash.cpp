@@ -2,7 +2,7 @@
 
 int main() {
 
-//srand(12456);
+srand(12456);
 int pasirinkimas;
 cout << "Paspaudus skaiciu issirinkite ka norite padaryti." << endl;
 cout << "1. Ivesti zodi arba simboli rankiniu budu." << endl;
@@ -13,9 +13,10 @@ cout << "5. Atidaryti tuscia faila 'tuscias.txt'." << endl;
 cout << "6. Sukurtas tyrimui su konstitucija.txt atlikti." << endl;
 cout << "7. Patikrinti kolizijas." << endl;
 cout << "8. Patikrinti lavinos efekta." << endl;
-cout << "9. Baigti darba." << endl;
-cout << "10. Kodas palyginimui su SHA256." << endl;
-cout << "11. Patikrinti hiding su druska tikrinant kolizijas." << endl;
+cout << "9. Kodas palyginimui su SHA256." << endl;
+cout << "10. Patikrinti hiding su druska tikrinant kolizijas." << endl;
+cout << "11. Patikrinti puzzle-friendliness su druska tikrinant kolizijas." << endl;
+cout << "12. Baigti darba." << endl;
 cout << "Jusu pasirinkimas: "; cin >> pasirinkimas;
 
 switch (pasirinkimas) {
@@ -24,7 +25,7 @@ switch (pasirinkimas) {
         string simboliai;
         cout << "Iveskite simboliu seka, kuria noretumete uzkoduoti: "; cin >> simboliai;
         hashFunkcija(simboliai);
-        hashFunkcijaSuDruska(simboliai);
+        //hashFunkcijaSuDruska(simboliai);
         break;
     }
 
@@ -33,15 +34,15 @@ switch (pasirinkimas) {
         cout << "Nuskaitomi 3 failai su vienu simboliu kiekviename. " << endl;
         string simbolis1 = nuskaitymasIsFailo("simbolis_1.txt");
         hashFunkcija(simbolis1);
-        hashFunkcijaSuDruska(simbolis1);
+        //hashFunkcijaSuDruska(simbolis1);
         cout << "-----------------------------------------------------------------" << endl;
         string simbolis2 = nuskaitymasIsFailo("simbolis_2.txt");
         hashFunkcija(simbolis2);
-        hashFunkcijaSuDruska(simbolis2);
+        //hashFunkcijaSuDruska(simbolis2);
         cout << "-----------------------------------------------------------------" << endl;
         string simbolis3 = nuskaitymasIsFailo("simbolis_3.txt");
         hashFunkcija(simbolis3);
-        hashFunkcijaSuDruska(simbolis3);
+        //hashFunkcijaSuDruska(simbolis3);
         break;
     }
     case 3:
@@ -96,12 +97,8 @@ switch (pasirinkimas) {
         generuotiPoras("lavina.txt");
         break;
     }
+    
     case 9:
-    {
-        cout << "Darbas baigtas." << endl;
-        break;
-    }
-    case 10:
     {
         int pasirinkimas3;
 
@@ -152,11 +149,24 @@ switch (pasirinkimas) {
             break;
     }
 
-    case 11:
+    case 10:
     {
         druskosKolizijos("druskosKolizijos.txt");
         break;
     }
+
+    case 11:
+    {
+        puzzleFriendlinessKolizijos("puzzleKolizijos.txt", 1000000);
+        break;
+    }
+
+    case 12:
+    {
+        cout << "Darbas baigtas." << endl;
+        break;
+    }
+
     default: 
     {
         cout << "Ivedete neteisinga skaiciu. Bandykite dar karta." << endl;
