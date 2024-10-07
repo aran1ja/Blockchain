@@ -9,6 +9,7 @@
 #include <vector>
 #include <algorithm>
 #include <numeric>   
+#include <random>   
 
 using namespace std;
 
@@ -112,12 +113,16 @@ string hashFunkcija(string simboliu_seka) {
 }
 
 string druskosPridejimas(int ilgis) {
-    srand(12345);
     char simboliai[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     string druska;
 
+    // Pataisyti, kad kiekviena karta duoda ta pati salt'a
+    random_device rd; 
+    mt19937 gen(rd()); 
+    uniform_int_distribution<> dis(0, sizeof(simboliai) - 2);
+
     for (int i = 0; i < ilgis; i++) {
-        druska += simboliai[rand() % (sizeof(simboliai) - 1)];
+        druska += simboliai[dis(gen)];
     }
 
     return druska;
@@ -137,7 +142,7 @@ string hashFunkcijaSuDruska(string simboliu_seka) {
             daugiklis++;
         }
 
-        bitset<256> binarinis_kodas((int)ascii_suma);
+        bitset<256> binarinis_kodas(ascii_suma);
         bitset<256> binarinis_kodas_kopija = binarinis_kodas; 
         for (int i = 0; i < 3; i++)
         {
@@ -145,7 +150,7 @@ string hashFunkcijaSuDruska(string simboliu_seka) {
         }
         
         string hexKodas = hexPadarymas(binarinis_kodas_kopija);
-        //cout << "Hash kodas su druska hex pavidalu:    " << hex << hexKodas << endl;
+        cout << "Hash kodas su druska hex pavidalu:    " << hex << hexKodas << endl;
         return hexKodas;
 }
 

@@ -56,9 +56,12 @@ switch (pasirinkimas) {
 
         cout << "Ar norite tu failo hash'o? Spauskite 1 - taip. Bet koks kitas skacius - ne." << endl; cin >> pasirinkti1;
         if (pasirinkti1 == 1) {
-            nuskaitymasIsFailo("sugeneruotas1.txt");
-            nuskaitymasIsFailo("sugeneruotas2.txt");
+            string vienas = nuskaitymasIsFailo("sugeneruotas1.txt");
+            hashFunkcija(vienas);
+            string du = nuskaitymasIsFailo("sugeneruotas2.txt");
+            hashFunkcija(du);
         } else break;
+        break;
     }
     case 4:
     {
