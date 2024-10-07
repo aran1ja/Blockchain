@@ -192,3 +192,21 @@ Tam, kad patikrinti mano hash funkcijoje realizuotą hiding savybę, nusprendži
 
 #### Išvada
 Pagal rezultatus galima padaryti išvadą, kad mano maišos funkcija turi gerą deterministinę ir hiding savybes, nes kiekvienai identiškai porai stringų yra 100.000 hex kolizijų ir 0 hex + druskos kolizijų. Tai reiškia, kad kiekvienai tai pačiai įvesčiai yra tokia pati hex išvestis. Tačiau druska pakeičia hex taip, kad praktiškai neįmanoma atgaminti pradinio įvedimo ar jo hex'o.
+
+#### Puzzle-friendliness
+**Puzzle-friendliness** reiškia, kad net ir maži pradinės įvesties pokyčiai sukelia didelius pokyčius hash vertėse. Todėl nuspendžiau padaryti daug labai panašių įvesčių ir patikrinti, ar yra bent 2 tokie patys hex su druska. Jei visais atvejais kolizijų nėra, tai rodo, kad net ir nedideli įvesties pakeitimai sukuria unikalius hash rezultatus. Tai įrodytų, kad mano funkcija turi puzzle-friendliness savybę.
+
+Tam, kad patikrinti mano hash funkcijoje realizuotą puzzle-friendliness savybę, nusprendžiau padaryti 100.000 string porų, kurie skirtusi 1 skaičiumi: labas0, labas1, labas2 itt.
+
+#### Rezultatai
+![image](https://github.com/user-attachments/assets/7cd377ed-6b43-44d3-81ff-456bee338654)
+
+#### Išvada
+Pagal rezultatus galima padaryti išvadą, kad mano maišos funkcija turi puzzle-friendliness savybes, nes nors kiekviena įvestis labai mažai keitėsi, tačiau jokių kolizijų tarp 100.000 eilučių nebuvo aptikta. Todėl pagalvojau, kad galimai, yra per mažai eilučių ir patikrinau 1.000.000 eilučių ir rezultatas buvo toks pat: 0 kolizijų.
+
+Taigi, mano funkcija turi hiding ir puzzle-friendliness savybes, kas įrodo, kad mano iš hash funkcijos rezultato praktiškai neįmanoma atgaminti pradinio įvedimo.
+
+### 3. Hash funkcijų integravimas į mano programą
+
+
+
