@@ -2,7 +2,7 @@
 
 int main() {
 
-srand(12456);
+//srand(12456);
 int pasirinkimas;
 cout << "Paspaudus skaiciu issirinkite ka norite padaryti." << endl;
 cout << "1. Ivesti zodi arba simboli rankiniu budu." << endl;
@@ -15,6 +15,7 @@ cout << "7. Patikrinti kolizijas." << endl;
 cout << "8. Patikrinti lavinos efekta." << endl;
 cout << "9. Baigti darba." << endl;
 cout << "10. Kodas palyginimui su SHA256." << endl;
+cout << "11. Patikrinti hiding su druska tikrinant kolizijas." << endl;
 cout << "Jusu pasirinkimas: "; cin >> pasirinkimas;
 
 switch (pasirinkimas) {
@@ -149,6 +150,12 @@ switch (pasirinkimas) {
                 break;
             }
             break;
+    }
+
+    case 11:
+    {
+        druskosKolizijos("druskosKolizijos.txt");
+        break;
     }
     default: 
     {

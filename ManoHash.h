@@ -108,7 +108,7 @@ string hashFunkcija(string simboliu_seka) {
         }
         
         string hexKodas = hexPadarymas(binarinis_kodas_kopija);
-        cout << "Hash kodo atvaizdavimas hex pavidalu: " << hex << hexKodas << endl;
+        //cout << "Hash kodo atvaizdavimas hex pavidalu: " << hex << hexKodas << endl;
         return hexKodas;
 }
 
@@ -116,13 +116,8 @@ string druskosPridejimas(int ilgis) {
     char simboliai[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     string druska;
 
-    // Pataisyti, kad kiekviena karta duoda ta pati salt'a
-    random_device rd; 
-    mt19937 gen(rd()); 
-    uniform_int_distribution<> dis(0, sizeof(simboliai) - 2);
-
     for (int i = 0; i < ilgis; i++) {
-        druska += simboliai[dis(gen)];
+        druska += simboliai[rand() % (sizeof(simboliai) - 1)]; 
     }
 
     return druska;
@@ -142,7 +137,7 @@ string hashFunkcijaSuDruska(string simboliu_seka) {
             daugiklis++;
         }
 
-        bitset<256> binarinis_kodas(ascii_suma);
+        bitset<256> binarinis_kodas((int)ascii_suma);
         bitset<256> binarinis_kodas_kopija = binarinis_kodas; 
         for (int i = 0; i < 3; i++)
         {
@@ -150,8 +145,8 @@ string hashFunkcijaSuDruska(string simboliu_seka) {
         }
         
         string hexKodas = hexPadarymas(binarinis_kodas_kopija);
-        cout << "Hash kodas su druska hex pavidalu:    " << hex << hexKodas << endl;
-        return hexKodas;
+        //cout << "Hash kodas su druska hex pavidalu:    " << hex << hexKodas << endl;
+        return druska + hexKodas;
 }
 
 string nuskaitymasIsFailo(string failoPavadinimas) {
@@ -241,8 +236,8 @@ void failuKurimas(string failoPavadinimas) {
             string pirmasIsPoru = randomSimboliuGeneravimas(poros_ilgis[i]);
             string antrasIsPoru = randomSimboliuGeneravimas(poros_ilgis[i]);
 
-            string pirmasHash = hashFunkcijaSuDruska(pirmasIsPoru);
-            string antrasHash = hashFunkcijaSuDruska(antrasIsPoru);
+            string pirmasHash = hashFunkcija(pirmasIsPoru);
+            string antrasHash = hashFunkcija(antrasIsPoru);
 
             if (pirmasHash == antrasHash) {
                 kolizijuSkaicius++; 
@@ -254,6 +249,47 @@ void failuKurimas(string failoPavadinimas) {
 
     failiukas.close();
     cout << "Koliziju skaicius: " << kolizijuSkaicius << endl;
+}
+
+void druskosKolizijos(string failoPavadinimas) {
+    srand(time(0)); 
+    ofstream failiukas(failoPavadinimas); 
+    if (!failiukas) {
+        cout << "Nepavyko atidaryti failo: " << failoPavadinimas << endl;
+        return;
+    }
+
+    int poros_ilgis[] = {10, 100, 500, 1000}; 
+    int poru_kiekis[] = {25000, 25000, 25000, 25000}; 
+    int kolizijuSkaicius = 0;
+    int saltKolizijuSkaicius = 0; 
+
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < poru_kiekis[i]; j++) {
+            string pirmasIsPoru = randomSimboliuGeneravimas(poros_ilgis[i]);
+            string antrasIsPoru = pirmasIsPoru;
+
+            string pirmasHash = hashFunkcija(pirmasIsPoru);
+            string antrasHash = hashFunkcija(antrasIsPoru);
+
+            if (pirmasHash == antrasHash) {
+                kolizijuSkaicius++; 
+            }
+            
+            string pirmasHashSalt = hashFunkcijaSuDruska(pirmasIsPoru);
+            string antrasHashSalt = hashFunkcijaSuDruska(antrasIsPoru);
+
+            if (pirmasHashSalt == antrasHashSalt) {
+                saltKolizijuSkaicius++; 
+            }
+
+            failiukas << pirmasIsPoru << " " << antrasIsPoru << endl;
+        }
+    }
+
+    failiukas.close();
+    cout << "Hash koliziju skaicius: " << kolizijuSkaicius << endl;
+    cout << "Hash + salt koliziju skaicius: " << saltKolizijuSkaicius << endl;
 }
 
 string pakeistiVienasSimboli(string eilute) {
