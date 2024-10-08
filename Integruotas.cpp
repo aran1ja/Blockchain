@@ -1,7 +1,7 @@
 #include "ManoHash.h"
 #include "robertos_hash.h"
 #include "rugiles_hash.h"
-//#include "kamiles_hash.h"
+#include "kamiles_hash.h"
 #include "paulinos_hash.h"
 
 int main() {
@@ -49,31 +49,32 @@ int main() {
         break;
     }
 
-    case 3:
+    case 3: //done
     {
         cout << "Rugiles kodas." << endl;
         cout << "'Konstitucija.txt' eiluciu nuskaitymas ir laiko matavimas." << endl;
-        
+        testavimas("konstitucija.txt");
         cout << "----------------------------------------------------------" << endl;
         cout << "Patikrinamos kolizijos." << endl;
-        
+        nuu().tikrinti_hash_kolizijas();
         cout << "----------------------------------------------------------" << endl;
         cout << "Patikrinamas lavinos efektas: skirtumas bit'u ir hex'u lygmenyje." << endl;
-        
+        lavinos_failas();
+        nuu().lavinos_testavimas();
         break;
     }
 
-    case 4:
+    case 4: //done
     {
         cout << "Kamiles kodas." << endl;
         cout << "'Konstitucija.txt' eiluciu nuskaitymas ir laiko matavimas." << endl;
-        
+        konstitucijosTestavimas();
         cout << "----------------------------------------------------------" << endl;
         cout << "Patikrinamos kolizijos." << endl;
-        
+        kolizijosTestavimas(); //atsitiktinesporos.txt
         cout << "----------------------------------------------------------" << endl;
         cout << "Patikrinamas lavinos efektas: skirtumas bit'u ir hex'u lygmenyje." << endl;
-        
+        AvalancheTestavimas(); //inputForAvalanche.txt
         break;
     }
 
