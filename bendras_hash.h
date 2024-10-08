@@ -5,6 +5,11 @@
 #include <string>
 #include <array>
 #include <vector>
+#include <chrono>
+#include <sstream>
+#include <fstream>
+#include <random>
+#include <unordered_map>
 
 using namespace std;
 
@@ -87,12 +92,12 @@ string hashFunkcija(string simboliu_seka) {
     }
 
     bitset<256> binarinis_kodas((int)ascii_suma);
-    bitset<256> binarinis_kodas_kopija = binarinis_kodas;
+    //bitset<256> binarinis_kodas_kopija = binarinis_kodas;
     for (int i = 0; i < 3; i++) {
-        bitaiKeiciasiVietomis(binarinis_kodas_kopija);
+        bitaiKeiciasiVietomis(binarinis_kodas);
     }
 
-    string hexKodas = hexPadarymas(binarinis_kodas_kopija);
+    string hexKodas = hexPadarymas(binarinis_kodas);
     
     if (hexKodas.length() < 64) {
         hexKodas.insert(0, 64 - hexKodas.length(), '0'); 
@@ -271,4 +276,223 @@ string bendrasHash(string simboliu_seka) {
     }
     
     return bendras;
+}
+
+double laikoMatavimas(vector<string>& linijos) {
+    auto start = chrono::high_resolution_clock::now();
+    for (int i = 0; i < 5; i++)
+    {
+        for (const auto& linija : linijos) {
+            bendrasHash(linija);
+        }
+    }
+    auto pabaiga = chrono::high_resolution_clock::now();
+    chrono::duration<double, milli> skirtumas = pabaiga - start;
+    return skirtumas.count() / 5; 
+}
+
+void konstitucija(const string& filename) {
+    ifstream file(filename);
+    vector<string> linijos; // Cia issaugomi duomenys
+    string linija;
+
+    while (getline(file, linija)) {
+        linijos.push_back(linija);
+    }
+
+    int linijuKiekis;
+    cout << "Kiek eiluciu norite hashuoti? (Max: " << linijos.size() << "): "; cin >> linijuKiekis;
+
+    vector<string> hashuojamos_eilutes(linijos.begin(), linijos.begin() + linijuKiekis);
+
+    double vidutinis_laikas = laikoMatavimas(hashuojamos_eilutes);
+    cout << "Vidutinis hashavimo laikas: " << vidutinis_laikas << " milisekundziu." << endl;
+}
+
+string gautiString(int ilgis)
+{
+    static const char alphanum[] = "0123456789"
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    "abcdefghijklmnopqrstuvwxyz";
+    string atsitiktinis_string;
+    atsitiktinis_string.reserve(ilgis);
+    int dydis = 62;
+    std::random_device rd;
+    std::mt19937 generator(rd());
+    std::uniform_int_distribution<int> distrib(0, dydis - 1);
+    for(int i = 0; i < ilgis; i++)
+    {
+        atsitiktinis_string+=alphanum[distrib(generator)];
+    }
+    return atsitiktinis_string;
+}
+void generuotiAtsitiktinesPoras()
+{
+    ofstream fr("atsitiktinesporos.txt");
+    vector<int> ilgiai = {10, 100, 500, 1000};
+    for(int i = 0; i < 4; i++)
+    {
+        int ilgis = ilgiai.at(i);
+        for(int j = 0; j < 25000; ++j)
+        {
+            string str1 = gautiString(ilgis);
+            string str2 = gautiString(ilgis);
+            while (str1 == str2) {
+                str1 =  gautiString(ilgis);
+                str2 =  gautiString(ilgis);
+            }
+            fr << str1 << " " << str2 << endl;
+        }
+    }
+    fr.close();
+}
+
+void kolizijosTestavimas()
+{
+    int rinktis;
+    cout << "Ar norite sugeneruoti faila su atsitiktinemis poromis, ar jau turite? Jei norite, spauskite 1, jei jau turite spauskite 2:" << endl;
+    cin >> rinktis;
+    if(rinktis == 1)
+    {
+        generuotiAtsitiktinesPoras();
+    }
+    ifstream fd("atsitiktinesporos.txt");
+    if (!fd) {
+        cerr << "Nepavyko atidaryti atsitiktinesporos.txt failo" << endl;
+        return;
+        }
+    string str1, str2;
+    int kolizijuSk = 0;
+    int poruSk = 0;
+    while(fd >> str1 >> str2)
+    {
+        poruSk++;
+        string hash1 = bendrasHash(str1);
+        string hash2 = bendrasHash(str2);
+        if (hash1 == hash2) {
+            kolizijuSk++;
+            //cout << "Kolizija aptikta! String 1: " << str1 << " | String 2: " << str2 << endl;
+                }
+    }
+    fd.close();
+    cout << "Viso patikrinta poru: " << poruSk << endl;
+    cout << "Viso aptikta koliziju: " << kolizijuSk << endl;
+    
+}
+
+void generuotiPorasSuVienuSkirtingu()
+{
+    ofstream fr("inputForAvalanche.txt");
+    vector<int> ilgiai = {10, 100, 500, 1000};
+    for(int i = 0; i < 4; i++)
+    {
+        int ilgis = ilgiai.at(i);
+        for(int j = 0; j < 25000; ++j)
+        {
+            string str1 = gautiString(ilgis);
+            string str2 = str1;
+            int keiciamoSimboloIndeksas = rand() % ilgis;
+            char naujSimb;
+            do{
+                naujSimb = 'A' + (rand() % 26);
+            }while(str1[keiciamoSimboloIndeksas]==naujSimb);
+            str2[keiciamoSimboloIndeksas] = naujSimb;
+            fr << str1 << " " << str2 << endl;
+        }
+    }
+    fr.close();
+}
+string hexToBin(string hex)
+{
+    std::unordered_map<char, std::string> hex_to_bin {
+            {'0', "0000"}, {'1', "0001"}, {'2', "0010"}, {'3', "0011"},
+            {'4', "0100"}, {'5', "0101"}, {'6', "0110"}, {'7', "0111"},
+            {'8', "1000"}, {'9', "1001"}, {'A', "1010"}, {'B', "1011"},
+            {'C', "1100"}, {'D', "1101"}, {'E', "1110"}, {'F', "1111"}
+        };
+    string bin;
+    for(char simb: hex)
+    {
+        bin += hex_to_bin[toupper(simb)];
+    }
+    return bin;
+}
+double bituLyginimas(string hashB1, string hashB2)
+{
+    double skirt = 0;
+    for(int i = 0; i < hashB1.length(); i++)
+    {
+        if(hashB1[i]!=hashB2[i])
+            skirt++;
+    }
+    return skirt;
+}
+double hexLyginimas(string hash1, string hash2)
+{
+    double skirt = 0;
+    for(int i = 0; i < hash1.length(); i++)
+    {
+        if(hash1[i]!=hash2[i])
+            skirt++;
+    }
+    return skirt;
+}
+
+void AvalancheTestavimas()
+{
+    int rinktis;
+    cout << "Ar norite sugeneruoti faila su poromis, kuriu elementai skiriasi tik vienu simboliu, ar jau turite? Jei norite, spauskite 1, jei jau turite spauskite 2:" << endl;
+    cin >> rinktis;
+    if(rinktis == 1)
+    {
+        generuotiPorasSuVienuSkirtingu();
+    }
+    string str1, str2;
+    ifstream fd("inputForAvalanche.txt");
+    if (!fd) {
+        cerr << "Nepavyko atidaryti inputForAvalanche.txt failo" << endl;
+        return;
+        }
+    int poruSk = 0;
+    double skirtingumasBitu = 0.0;
+    double skirtingumasHex = 0.0;
+    double minBitSkirtumas = 100.0;
+    double maxBituSkirtumas = 0.0;
+    double minxHexSkirtumas = 100.0;
+    double maxHexSkirtumas = 0.0;
+    
+    while(fd >> str1 >> str2)
+    {
+       
+        string hash1 = bendrasHash(str1);
+        string hash2 = bendrasHash(str2);
+        double skBitu = bituLyginimas(hexToBin(hash1), hexToBin(hash2));
+        skirtingumasBitu+=skBitu;
+        if(skBitu == 0)
+        {
+            cout << str1 << str2 << endl;
+            cout << hash1 << endl;
+            cout << hash2 << endl;
+        }
+        minBitSkirtumas = min(minBitSkirtumas, skBitu);
+        maxBituSkirtumas=max(maxBituSkirtumas, skBitu);
+        double skHex = hexLyginimas(hash1, hash2);
+        skirtingumasHex+=skHex;
+        minxHexSkirtumas= min(minxHexSkirtumas, skHex);
+        maxHexSkirtumas = max(maxHexSkirtumas, skHex);
+        poruSk++;
+        
+    }
+    
+    fd.close();
+    cout << "Avalanche testas baigtas! Rezultatai: \n";
+    cout << "Patikrinta poru: " << poruSk << endl;
+    cout << "Vidutinis skirtumas bitu lygmenyje: " << ((skirtingumasBitu / poruSk)/256.0)*100.0 << "%" << endl;
+    cout << "Minimalus skirtumas bitu lygmenyje: " << (minBitSkirtumas/256.0)*100.0 << "%" << endl;
+    cout << "Maksimalus skirtumas bitu lygmenyje: " << (maxBituSkirtumas/256.0)*100.0 << "%" << endl;
+    cout << "Vidutinis skirtumas hex lygmenyje: " << ((skirtingumasHex / poruSk)/64.0)*100.0 << "%" << endl;
+    cout << "Minimalus skirtumas hex lygmenyje: " << (minxHexSkirtumas/64.0)*100.0 << "%" << endl;
+    cout << "Maksimalus skirtumas hex lygmenyje: " << (maxHexSkirtumas/64.0)*100.0 << "%" << endl;
+    
+    
 }
