@@ -25,7 +25,7 @@ int main() {
         konstitucija("konstitucija.txt");
         cout << "----------------------------------------------------------" << endl;
         cout << "Patikrinamos kolizijos." << endl;
-        //failuKurimas("100000.txt");
+        failuKurimas("100000.txt");
         cout << "----------------------------------------------------------" << endl;
         cout << "Patikrinamas lavinos efektas: skirtumas bit'u ir hex'u lygmenyje." << endl;
         generuotiPoras("lavina.txt");

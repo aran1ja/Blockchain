@@ -25,10 +25,10 @@ int main() {
         konstitucija("konstitucija.txt");
         cout << "----------------------------------------------------------" << endl;
         cout << "Patikrinamos kolizijos." << endl;
-        kolizijosTestavimas();
+        //kolizijosTestavimas();
         cout << "----------------------------------------------------------" << endl;
         cout << "Patikrinamas lavinos efektas: skirtumas bit'u ir hex'u lygmenyje." << endl;
-        AvalancheTestavimas();
+        //AvalancheTestavimas();
         break;
     }
         
