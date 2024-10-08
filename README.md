@@ -207,6 +207,140 @@ Pagal rezultatus galima padaryti išvadą, kad mano maišos funkcija turi puzzle
 Taigi, mano funkcija turi hiding ir puzzle-friendliness savybes, kas įrodo, kad mano iš hash funkcijos rezultato praktiškai neįmanoma atgaminti pradinio įvedimo.
 
 ### 3. Hash funkcijų integravimas į mano programą
+Sukuriau failą "Intergruotas.cpp" kur iš pradžių įtraukiau 5 kodus. Tų kodų savininkų github nuorodos (įskaitant mano):
 
+      * https://github.com/aran1ja/Blockchain/tree/v0.2
+      * https://github.com/robke0224/blockchain
+      * https://github.com/EligMaa/blockchain_darbas_1/tree/v0.1
+      * https://github.com/kamzob/Blockchain/tree/v0.2
+      * https://github.com/paulynaa/Blockchain/tree/v0.2
+
+tačiau vienas man neveikė (Robertos), todėl galutiniame rezultate yra 4 kodai.
+
+Nusprendžiau iš pradžių paleisti kiekvieną kodą atskirai ir įvertinti kiek laiko užima "konstitucija.txt" eilučių hashavimas, ar pasitaiko kolizijos ir kokio efektyvumo yra lavinos efektas. Po rezultatų palyginimo išreitinguosiu kieno kodas yra efektyviausias.
+
+#### Adriana
+1. Failo "konstitucija.txt" eilučių hashavimo laikas.
+   
+   | Eilučių kiekis | 1   | 2   | 4   | 8   | 16  | 32  | 64  | 128  | 256  | 512  | 789  |
+   |----------------|-----|-----|-----|-----|-----|-----|-----|------|------|------|------|
+   | Laikas (ms)    |0.185|0.199|0.400|0.801|1.800|3.218|7.816|17.200|30.417|58.101|89.017|
+
+2. Kolizijų kiekis: 0.
+3. Skirtumas bitų ir hex'ų lygmenyje
+
+   | Min hex skirtumas  | Max hex skirtumas  | Vid hex skirtumas  | Min bit skirtumas  | Max bit skirtumas  | Vid bit skirtumas  |
+   |--------------------|--------------------|--------------------|--------------------|--------------------|--------------------|
+   | 25%                | 100%               | 92.0766%           | 9.375%             | 62.8906%           | 48.7091%           |
+
+#### Rugilė
+1. Failo "konstitucija.txt" eilučių hashavimo laikas.
+   
+   | Eilučių kiekis  | 1   | 2   | 4   | 8   | 16   | 32   | 64  | 128  | 256  | 512  |
+   |-----------------|-----|-----|-----|-----|------|------|-----|------|------|------|
+   | Laikas (ms)     |  0  |  0  |  0  |  0  |0.4004|0.1996|0.400|1.4038|2.4126|6.4182|
+
+2. Kolizijų kiekis: 0.
+3. Skirtumas bitų ir hex'ų lygmenyje
+
+   | Min hex skirtumas  | Max hex skirtumas  | Vid hex skirtumas  | Min bit skirtumas  | Max bit skirtumas  | Vid bit skirtumas  |
+   |--------------------|--------------------|--------------------|--------------------|--------------------|--------------------|
+   | 75%                | 100%               | 93%                | 37%                | 65%                | 50%                |
+   
+#### Kamilė
+1. Failo "konstitucija.txt" eilučių hashavimo laikas.
+   
+   | Eilučių kiekis  | 1   | 2   | 4   | 8   | 16  | 32  | 64   | 128  | 256  | 512  |
+   |-----------------|-----|-----|-----|-----|-----|-----|------|------|------|------|
+   | Laikas (ms)     |  0  |  0  |  0  |  0  |  0  | 0.2 |0.6042|1.2028|2.7976|6.5992|
+
+2. Kolizijų kiekis: 0.
+3. Skirtumas bitų ir hex'ų lygmenyje
+
+   | Min hex skirtumas  | Max hex skirtumas  | Vid hex skirtumas  | Min bit skirtumas  | Max bit skirtumas  | Vid bit skirtumas  |
+   |--------------------|--------------------|--------------------|--------------------|--------------------|--------------------|
+   | 68.75%             | 100%               | 93.4453%           | 36.3281%           | 62.1094%           | 49.8915%           |
+   
+#### Paulina
+1. Failo "konstitucija.txt" eilučių hashavimo laikas.
+   
+   | Eilučių kiekis | 1   | 2   | 4   | 8   | 16  | 32  | 64  | 128 | 256 | 512 | 789 |
+   |----------------|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|
+   | Laikas (ms)    |1.997|1.002|1.000|1.999|1.002|2.004|2.000|0.999|1.999|2.960|3.999|
+
+2. Kolizijų kiekis: 0.
+3. Skirtumas bitų ir hex'ų lygmenyje
+
+   | Min hex skirtumas  | Max hex skirtumas  | Vid hex skirtumas  | Min bit skirtumas  | Max bit skirtumas  | Vid bit skirtumas  |
+   |--------------------|--------------------|--------------------|--------------------|--------------------|--------------------|
+   | 0%                 | 100%               | 87.41%             | 0%                 | 87.50%             | 49.18%             |
+
+#### Rezultatai
+Rezultatus galima peržiūrėti "Palyginimas1.png" ir "Palyginimas2.png". Visuose koduose nėra kolizijų.
+- Palyginimas1
+Padarykime lentelę su rezultatais
+
+   | Vardas     | 1   | 2   | 4   | 8   | 16   | 32       | 64      | 128     | 256     | 512     | 789     |
+   |------------|-----|-----|-----|-----|------|----------|---------|---------|---------|---------|---------|
+   | Adriana    |0.185|0.199|0.400|0.801|1.800 |3.218     |7.816    |17.200   |30.417   |58.101   |89.017   |
+   | Rugilė     |**0**|**0**|**0**|**0**|0.4004|**0.1996**|**0.400**|1.4038   |2.4126   |6.4182   |  -      |
+   | Kamilė     |**0**|**0**|**0**|**0**|**0** | 0.2      |0.6042   |1.2028   |2.7976   |6.5992   |  -      |
+   | Paulina    |1.997|1.002|1.000|1.999|1.002 |2.004     |2.000    |**0.999**|**1.999**|**2.960**|**3.999**|
+  
+  Pagal duotą lentelę gerai matosi kieno kodas nuskaitė greičiau tam tikrą eilučių kiekį. Taigi laimi tas, kuri daugiau pajuodintų (reiškia geriausių kategorijoje) rezultatų.
+
+  Rezultatas:
+  
+   | Vardas  | Vieta |
+   |---------|-------|
+   | Rugile  | 1     | 
+   | Kamile  | 2     | 
+   | Paulina | 3     | 
+   | Adriana | 4     |
+
+- Palyginimas2
+Padarykime lentelę su rezultatais
+
+   | Vardas  | Vid bit | Max bit | Min bit | Vid hex   | Max hex | Min hex |
+   |---------|---------|---------|---------|-----------|---------|---------|
+   | Adriana | 48.7091 | 62.8906 |  9.375  | 92.0766   | **100** | 25      |
+   | Rugile  | **50**  | 65      | **37**  | 93        | **100** | **75**  |
+   | Kamile  | 49.8915 | 62.1094 | 36.3281 |**93.4453**| **100** | 68.75   |
+   | Paulina | 49.18   | **87.5**| 0       | 87.41     | **100** | 0       |
+
+  Pagal duotą lentelę gerai matosi kieno rodyklės yra geriausios kurioje kategorijoje. Taigi laimi tas, kuri daugiau pajuodintų (reiškia geriausių kategorijoje) rezultatų.
+
+  Rezultatas:
+  
+   | Vardas  | Vieta |
+   |---------|-------|
+   | Rugile  | 1     | 
+   | Kamile  | 2     | 
+   | Paulina | 2     | 
+   | Adriana | 3     |
+
+  #### Išvada
+  Apibendrinus rezultatus iš abiejų palyginimų, darosi akivaizdu, kad pagal visus rezultatus, galutinis reitingiavimas atrodo taip:
+
+   | Vardas  | Vieta |
+   |---------|-------|
+   | Rugile  | 1     | 
+   | Kamile  | 2     | 
+   | Paulina | 3     | 
+   | Adriana | 4     |
+
+#### Apjungto kodo rezultatas
+1. Failo "konstitucija.txt" eilučių hashavimo laikas.
+   
+   | Eilučių kiekis | 1   | 2   | 4   | 8   | 16  | 32  | 64  | 128  | 256  | 512  | 789  |
+   |----------------|-----|-----|-----|-----|-----|-----|-----|------|------|------|------|
+   | Laikas (ms)    | | | | | | | | | | | |
+
+2. Kolizijų kiekis:
+3. Skirtumas bitų ir hex'ų lygmenyje
+
+   | Min hex skirtumas  | Max hex skirtumas  | Vid hex skirtumas  | Min bit skirtumas  | Max bit skirtumas  | Vid bit skirtumas  |
+   |--------------------|--------------------|--------------------|--------------------|--------------------|--------------------|
+   | %                | %               | %           | %             | %           | %           |
 
 
