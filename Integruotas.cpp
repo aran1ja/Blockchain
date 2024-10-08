@@ -1,7 +1,7 @@
 #include "ManoHash.h"
 #include "robertos_hash.h"
 #include "rugiles_hash.h"
-#include "kamiles_hash.h"
+//#include "kamiles_hash.h"
 #include "paulinos_hash.h"
 
 int main() {
@@ -20,8 +20,9 @@ int main() {
 
     switch (pasirinkti)
     {
-    case 1:
+    case 1: //done
     {
+        cout << "Adrianos kodas." << endl;
         cout << "'Konstitucija.txt' eiluciu nuskaitymas ir laiko matavimas." << endl;
         konstitucija("konstitucija.txt");
         cout << "----------------------------------------------------------" << endl;
@@ -33,29 +34,82 @@ int main() {
         break;
     }
         
-    case 2:
+    case 2: //iskyla problemu
     {
-
+        cout << "Robertos kodas." << endl;
+        cout << "'Konstitucija.txt' eiluciu nuskaitymas ir laiko matavimas." << endl;
+        konstitucijaR("konstitucija.txt");
+        cout << "----------------------------------------------------------" << endl;
+        cout << "Patikrinamos kolizijos." << endl;
+        generuotiPorasR("poros.txt");
+        apdorotiPorasIrTikrinimasR("poros.txt", "kolizijosRoberta.txt");
+        cout << "----------------------------------------------------------" << endl;
+        cout << "Patikrinamas lavinos efektas: skirtumas bit'u ir hex'u lygmenyje." << endl;
+        lavinosEfektasR("lavinosEfektasRoberta.txt", "lavinosRezultatasRoberta.txt");
+        break;
     }
 
     case 3:
     {
-
+        cout << "Rugiles kodas." << endl;
+        cout << "'Konstitucija.txt' eiluciu nuskaitymas ir laiko matavimas." << endl;
+        
+        cout << "----------------------------------------------------------" << endl;
+        cout << "Patikrinamos kolizijos." << endl;
+        
+        cout << "----------------------------------------------------------" << endl;
+        cout << "Patikrinamas lavinos efektas: skirtumas bit'u ir hex'u lygmenyje." << endl;
+        
+        break;
     }
 
     case 4:
     {
-
+        cout << "Kamiles kodas." << endl;
+        cout << "'Konstitucija.txt' eiluciu nuskaitymas ir laiko matavimas." << endl;
+        
+        cout << "----------------------------------------------------------" << endl;
+        cout << "Patikrinamos kolizijos." << endl;
+        
+        cout << "----------------------------------------------------------" << endl;
+        cout << "Patikrinamas lavinos efektas: skirtumas bit'u ir hex'u lygmenyje." << endl;
+        
+        break;
     }
 
-    case 5:
+    case 5: //done
     {
-
+        cout << "Paulinos kodas." << endl;
+        cout << "'Konstitucija.txt' eiluciu nuskaitymas ir laiko matavimas." << endl;
+        vector<string> fileName = skaitytieil("konstitucija.txt");
+        konstitucijatestas(fileName);
+        cout << "----------------------------------------------------------" << endl;
+        cout << "Patikrinamos kolizijos." << endl;
+        vector<pair<string, string>> randompora = generuojamrandporas();
+        string filename = "randomporos.txt";
+        porosfailiukas(randompora, filename);
+        hashkolizijos(randompora);
+        cout << "----------------------------------------------------------" << endl;
+        cout << "Patikrinamas lavinos efektas: skirtumas bit'u ir hex'u lygmenyje." << endl;
+        const int numPairs = 100000;
+        const int maxLength = 1000;
+        vector<pair<string, string>> randomporampam = generuojamporas1simbdiff(numPairs, maxLength);
+        lavinosteastas(randomporampam);
+        break;
     }
 
     case 6:
     {
-
+        cout << "Bendras kodas." << endl;
+        cout << "'Konstitucija.txt' eiluciu nuskaitymas ir laiko matavimas." << endl;
+        
+        cout << "----------------------------------------------------------" << endl;
+        cout << "Patikrinamos kolizijos." << endl;
+        
+        cout << "----------------------------------------------------------" << endl;
+        cout << "Patikrinamas lavinos efektas: skirtumas bit'u ir hex'u lygmenyje." << endl;
+        
+        break;
     }
     
     default:

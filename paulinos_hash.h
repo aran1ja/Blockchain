@@ -337,7 +337,7 @@ void lavinosteastas(const vector<pair<string, string>>& pora) {
     cout << "Bit skirtingumas - Min: " << bitMin << "%, Max: " << bitMax << "%, Avg: " << bitAvg << "%" << endl;
     cout << "Hex skirtingumas - Min: " << hexMin << "%, Max: " << hexMax << "%, Avg: " << hexAvg << "%" << endl;
 }
-
+/*
 int main() {
     int variantas;
 
@@ -439,4 +439,4 @@ int main() {
     }
 
     return 0;
-}
+}*/
