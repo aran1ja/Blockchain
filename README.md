@@ -28,7 +28,7 @@ Kadangi buvo nors ir minimalūs kodo pakeitimai, tačiau reikėtų vėl patikrin
      ![image](https://github.com/user-attachments/assets/4e90e486-a7d7-43ed-a642-20778d906e18)
      ![image](https://github.com/user-attachments/assets/a52d1085-a714-41fb-b69d-9fd411432434)
      ![image](https://github.com/user-attachments/assets/8896624d-3016-4fb4-a71f-c6291c3b6f75)
-     ![image](https://github.com/user-attachments/assets/2e2bab28-78a3-400b-ad00-18ea38f3d379)
+     ![image](https://github.com/user-attachments/assets/bd338b91-7b26-4c1a-80d7-2119f1deb1ed)
 
       Iš šitų nuotraukų galima padaryti išvadą, kad 1 reikalavimas neišnyko po kodo pakeitimo.
 
@@ -219,6 +219,10 @@ tačiau vienas man neveikė (Robertos), todėl galutiniame rezultate yra 4 kodai
 
 Nusprendžiau iš pradžių paleisti kiekvieną kodą atskirai ir įvertinti kiek laiko užima "konstitucija.txt" eilučių hashavimas, ar pasitaiko kolizijos ir kokio efektyvumo yra lavinos efektas. Po rezultatų palyginimo išreitinguosiu kieno kodas yra efektyviausias.
 
+_**"Integruotas.cpp"**_ paleidžia 4 kodus atskirai ir priklauso nuo "ManoHash.h", "rugiles_hash.h", "kamiles_hash.h", "paulinos_hash.h".
+
+_**"ViskasViename.cpp"**_ paleidžia 1 kodą, kuriame yra sujungtos 4 maišos funkcijos ir priklauso nuo "bendras_hash.h".
+
 #### Adriana
 1. Failo "konstitucija.txt" eilučių hashavimo laikas.
    
@@ -293,8 +297,8 @@ Padarykime lentelę su rezultatais
   
    | Vardas  | Vieta |
    |---------|-------|
-   | Rugile  | 1     | 
-   | Kamile  | 2     | 
+   | Rugilė  | 1     | 
+   | Kamilė  | 2     | 
    | Paulina | 3     | 
    | Adriana | 4     |
 
@@ -304,8 +308,8 @@ Padarykime lentelę su rezultatais
    | Vardas  | Vid bit | Max bit | Min bit | Vid hex   | Max hex | Min hex |
    |---------|---------|---------|---------|-----------|---------|---------|
    | Adriana | 48.7091 | 62.8906 |  9.375  | 92.0766   | **100** | 25      |
-   | Rugile  | **50**  | 65      | **37**  | 93        | **100** | **75**  |
-   | Kamile  | 49.8915 | 62.1094 | 36.3281 |**93.4453**| **100** | 68.75   |
+   | Rugilė  | **50**  | 65      | **37**  | 93        | **100** | **75**  |
+   | Kamilė  | 49.8915 | 62.1094 | 36.3281 |**93.4453**| **100** | 68.75   |
    | Paulina | 49.18   | **87.5**| 0       | 87.41     | **100** | 0       |
 
   Pagal duotą lentelę gerai matosi kieno rodyklės yra geriausios kurioje kategorijoje. Taigi laimi tas, kuri daugiau pajuodintų (reiškia geriausių kategorijoje) rezultatų.
@@ -314,8 +318,8 @@ Padarykime lentelę su rezultatais
   
    | Vardas  | Vieta |
    |---------|-------|
-   | Rugile  | 1     | 
-   | Kamile  | 2     | 
+   | Rugilė  | 1     | 
+   | Kamilė  | 2     | 
    | Paulina | 2     | 
    | Adriana | 3     |
 
@@ -324,23 +328,33 @@ Padarykime lentelę su rezultatais
 
    | Vardas  | Vieta |
    |---------|-------|
-   | Rugile  | 1     | 
-   | Kamile  | 2     | 
+   | Rugilė  | 1     | 
+   | Kamilė  | 2     | 
    | Paulina | 3     | 
    | Adriana | 4     |
+
+-------------------------------------------------------------------------------------------------------------
 
 #### Apjungto kodo rezultatas
 1. Failo "konstitucija.txt" eilučių hashavimo laikas.
    
-   | Eilučių kiekis | 1   | 2   | 4   | 8   | 16  | 32  | 64  | 128  | 256  | 512  | 789  |
-   |----------------|-----|-----|-----|-----|-----|-----|-----|------|------|------|------|
-   | Laikas (ms)    | | | | | | | | | | | |
+   | Eilučių kiekis | 1   | 2   | 4   | 8   | 16  | 32  | 64  | 128  | 256  | 512  | 789   |
+   |----------------|-----|-----|-----|-----|-----|-----|-----|------|------|------|-------|
+   | Laikas (ms)    |0.216|0.199|0.599|0.984|2.218|4.553|8.977|18.554|39.908|80.489|121.574|
 
-2. Kolizijų kiekis:
-3. Skirtumas bitų ir hex'ų lygmenyje
+   Palyginus net su lėčiausiai veikiančiomis programomis iš anksčiau nurodytos lentelės, ši programa veikia net dar lėčiau. Taip įvyko dėl to, kad labai daug yra skaičiavimų.
+
+3. Kolizijų kiekis: 0.
+4. Skirtumas bitų ir hex'ų lygmenyje
 
    | Min hex skirtumas  | Max hex skirtumas  | Vid hex skirtumas  | Min bit skirtumas  | Max bit skirtumas  | Vid bit skirtumas  |
    |--------------------|--------------------|--------------------|--------------------|--------------------|--------------------|
-   | %                | %               | %           | %             | %           | %           |
+   | 18.75%             | 100%               | 93.5486%           | 7.8125%            | 64.0625%           | 49.7146%           |
 
+   Palyginus su geriausiais rezultatais praeitos programos, tai čia geresnis tik vidutinis hex skirtumas.
+
+  Įrodymas:
+  ![image](https://github.com/user-attachments/assets/0cd00b1d-15ff-4091-9bf7-e462159ca19c)
+
+  Taigi, programa apjungia 4 skirtingas maišos funkcijas, tačiau ji netapo efektyvesnė nei laiko atžvilgiu, nei kokybiškumo (ji turi geresnį vidutinį skirtumą, tačiau ji geresnė tik 0.1033%).
 
