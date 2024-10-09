@@ -277,7 +277,7 @@ _**"ViskasViename.cpp"**_ paleidžia 1 kodą, kuriame yra sujungtos 4 maišos fu
 
    | Min hex skirtumas  | Max hex skirtumas  | Vid hex skirtumas  | Min bit skirtumas  | Max bit skirtumas  | Vid bit skirtumas  |
    |--------------------|--------------------|--------------------|--------------------|--------------------|--------------------|
-   | 0%                 | 100%               | 87.41%             | 0%                 | 87.50%             | 49.18%             |
+   | 30%                | 100%               | 87.41%             | 12.5%              | 87.50%             | 49.18%             |
 
 #### Rezultatai
 Rezultatus galima peržiūrėti "Palyginimas1.png" ir "Palyginimas2.png". Visuose koduose nėra kolizijų.
@@ -310,7 +310,7 @@ Padarykime lentelę su rezultatais
    | Adriana | 48.7091 | 62.8906 |  9.375  | 92.0766   | **100** | 25      |
    | Rugilė  | **50**  | 65      | **37**  | 93        | **100** | **75**  |
    | Kamilė  | 49.8915 | 62.1094 | 36.3281 |**93.4453**| **100** | 68.75   |
-   | Paulina | 49.18   | **87.5**| 0       | 87.41     | **100** | 0       |
+   | Paulina | 49.18   | **87.5**| 12.5    | 87.41     | **100** | 30      |
 
   Pagal duotą lentelę gerai matosi kieno rodyklės yra geriausios kurioje kategorijoje. Taigi laimi tas, kuri daugiau pajuodintų (reiškia geriausių kategorijoje) rezultatų.
 
